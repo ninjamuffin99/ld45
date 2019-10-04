@@ -1,5 +1,23 @@
 {
 	"search.exclude": {
 		"export/**/*.hx": true
+	},
+	"haxe.codeGeneration": {
+		"functions": {
+			"anonymous": {
+				"argumentTypeHints": false,
+				"explicitNull": false,
+				"returnTypeHint": "non-void",
+				"useArrowSyntax": true
+			},
+			"field": {
+				"argumentTypeHints": true,
+				"explicitNull": false,
+				"explicitPrivate": false,
+				"explicitPublic": false,
+				"placeOpenBraceOnNewLine": false,
+				"returnTypeHint": "always"
+			}
+		}
 	}
 }
