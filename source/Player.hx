@@ -2,12 +2,15 @@ package;
 
 import flixel.FlxSprite;
 import flixel.FlxG;
+import flixel.util.FlxColor;
 
 class Player extends Character
 {
     public function new(X:Float, Y:Float)
     {
         super(X, Y);
+
+        color = FlxColor.BLUE;
     }
 
     override public function update(elapsed:Float):Void
