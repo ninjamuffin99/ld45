@@ -68,7 +68,6 @@ class Punchable extends FlxSpriteGroup
                 testObj.makeGraphic(Std.int(b[2]), Std.int(b[3]));
                 testObj.offsetShit = new FlxRect(b[0], b[1], b[2], b[3]);
                 testObj.alpha = 0.5;
-                testObj.allowCollisions = FlxObject.ANY;
                 grpHurtboxes.add(testObj);
                 testObj.color = FlxColor.GREEN;
             }
@@ -83,7 +82,6 @@ class Punchable extends FlxSpriteGroup
                 testObj.makeGraphic(Std.int(b[2]), Std.int(b[3]));
                 testObj.offsetShit = new FlxRect(b[0], b[1], b[2], b[3]);
                 testObj.alpha = 0.5;
-                testObj.allowCollisions = FlxObject.ANY;
                 grpHitboxes.add(testObj);
                 testObj.color = FlxColor.RED;
             }
