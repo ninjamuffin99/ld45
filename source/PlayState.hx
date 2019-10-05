@@ -14,15 +14,20 @@ class PlayState extends FlxState
 	{
 		trace("BOOTED UP");
 
-		
+		FlxG.watch.addMouse();	
 
-		ground = new FlxSprite(0, FlxG.height - 50).makeGraphic(FlxG.width, 10);
+		ground = new FlxSprite(0, FlxG.height - 10).makeGraphic(FlxG.width, 10);
 		ground.immovable = true;
 		add(ground);
 
-		ground2 = new FlxSprite(0, FlxG.height - 220).makeGraphic(FlxG.width, 10);
+		ground2 = new FlxSprite(0, FlxG.height - 260).makeGraphic(FlxG.width, 10);
 		ground2.immovable = true;
 		add(ground2);
+
+		var bg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.castleCrashersTempBG__jpg);
+		bg.setGraphicSize(FlxG.width, FlxG.height);
+		bg.updateHitbox();
+		add(bg);
 
 		_player = new Player(100, 400);
 		add(_player);
