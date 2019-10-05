@@ -153,8 +153,8 @@ class Punchable extends FlxSpriteGroup
     private function setSpritePos(spr:Hitbox):Void
     {
         if (daSprite.facing == FlxObject.RIGHT)
-            spr.setPosition(daSprite.getGraphicMidpoint().x + (spr.offsetShit.x), daSprite.y + spr.offsetShit.y);
+            spr.setPosition(daSprite.getMidpoint().x + (spr.offsetShit.x), daSprite.y + spr.offsetShit.y);
         if (daSprite.facing == FlxObject.LEFT)
-            spr.setPosition(daSprite.getGraphicMidpoint().x - (spr.offsetShit.x) - spr.width, daSprite.y + spr.offsetShit.y);
+            spr.setPosition(daSprite.getMidpoint().x - (spr.offsetShit.x) - spr.width, daSprite.y + spr.offsetShit.y);
     }
 }

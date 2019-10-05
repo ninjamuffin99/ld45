@@ -15,19 +15,23 @@ class Player extends Character
         speed = 230;
 
         daSprite.color = FlxColor.WHITE;
-        var tex = FlxAtlasFrames.fromSpriteSheetPacker(AssetPaths.hoboSheet__png, AssetPaths.hoboSheet__txt);
+        var tex = FlxAtlasFrames.fromSparrow(AssetPaths.HoboMoveSet__png, AssetPaths.HoboMoveSet__xml);
         daSprite.frames = tex;
+        daSprite.setGraphicSize(0, 100);
         daSprite.updateHitbox();
-        daSprite.offset.y = 85;
+        daSprite.antialiasing = true;
+        daSprite.offset.y = 185;
          var daOffsetY:Float = daSprite.height - daSprite.offset.y;
-        daSprite.height = daOffsetY;
+        daSprite.height = 15;
+        generateHitboxes();
 
-        daSprite.animation.add("idle", [0]);
-        daSprite.animation.add("punch", [1], 6, false);
+        daSprite.animation.addByPrefix("idle", "HoboIdle", 24, true);
+        daSprite.animation.addByPrefix("punch", "HoboPunch", 24, false);
+        daSprite.animation.addByPrefix("walk", "HoboWalk", 24, true);
         daSprite.animation.play("idle");
 
-        daSprite.setFacingFlip(FlxObject.LEFT, false, false);
-        daSprite.setFacingFlip(FlxObject.RIGHT, true, false);
+        daSprite.setFacingFlip(FlxObject.LEFT, true, false);
+        daSprite.setFacingFlip(FlxObject.RIGHT, false, false);
 
         grpHurtboxes.forEach(function(spr:Hitbox)
         {
@@ -66,29 +70,46 @@ class Player extends Character
         if (FlxG.keys.pressed.SHIFT)
             speed *= 1.6;
 
-        if (_left || _right)
+        if (_left || _right || _up || _down)
         {
-            if (_left)
+            if (_left || _right)
             {
-                daSprite.facing = FlxObject.LEFT;
-                velocity.x = -speed;
-            }
-                
-            if (_right)
-            {
-                daSprite.facing = FlxObject.RIGHT;
-                velocity.x = speed;
-            }
-                
-        }
+                if (_left)
+                {
+                    daSprite.facing = FlxObject.LEFT;
+                    velocity.x = -speed;
+                    
+                }
+                    
+                if (_right)
+                {
+                    daSprite.facing = FlxObject.RIGHT;
+                    velocity.x = speed;
+                }
 
-        if (_up || _down)
-        {
-            if (_up)
-                velocity.y = -speed;
-            if (_down)
-                velocity.y = speed;
+                
+            }
+
+            if (_up || _down)
+            {
+                if (_up)
+                    velocity.y = -speed;
+                if (_down)
+                    velocity.y = speed;
+                
+                
+            }
+
+            if (daSprite.animation.curAnim.name == "idle")
+                daSprite.animation.play("walk");
         }
+        else
+        {
+            if (daSprite.animation.curAnim.name == "walk")
+                daSprite.animation.play("idle");
+        }
+            
+        
         
         if (FlxG.keys.justPressed.SPACE && canAttack)
         {
