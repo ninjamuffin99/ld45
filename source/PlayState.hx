@@ -34,11 +34,11 @@ class PlayState extends FlxState
 		var bg4:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.beta_bg4__png);
 		add(bg4);
 
-		_player = new Player(100, 400);
-		add(_player);
-
 		grpEnemies = new FlxTypedGroup<Enemy>();
 		add(grpEnemies);
+
+		_player = new Player(100, 400);
+		add(_player);
 
 		var e:Enemy = new Enemy(_player.x + 300, _player.y);
 		grpEnemies.add(e);

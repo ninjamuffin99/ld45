@@ -22,14 +22,14 @@ class Punchable extends FlxSpriteGroup
     public var hurtboxes:Array<Dynamic> = 
     [
         [
-            [0, -85, 100, 100]
+            [-30, -85, 60, 100]
         ]
     ];
 
     public var hitboxes:Array<Dynamic> =
     [
         [
-            [100, 0, 30, 10]
+            [30, -50, 20, 20]
         ]
     ];
 
@@ -122,14 +122,23 @@ class Punchable extends FlxSpriteGroup
 
         grpHurtboxes.forEach(function(spr:Hitbox)
         {
-            spr.setPosition(daSprite.x + spr.offsetShit.x, daSprite.y + spr.offsetShit.y);
+            setSpritePos(spr);
         });
 
         grpHitboxes.forEach(function(spr:Hitbox)
         {
-            spr.setPosition(daSprite.x + spr.offsetShit.x, daSprite.y + spr.offsetShit.y);
+            setSpritePos(spr);
+
         });
         // testObj.setPosition(daSprite.x + hurtboxes[0][0][0], daSprite.y + hurtboxes[0][0][1]);
 
+    }
+
+    private function setSpritePos(spr:Hitbox):Void
+    {
+        if (daSprite.facing == FlxObject.RIGHT)
+            spr.setPosition(daSprite.getGraphicMidpoint().x + (spr.offsetShit.x), daSprite.y + spr.offsetShit.y);
+        if (daSprite.facing == FlxObject.LEFT)
+            spr.setPosition(daSprite.getGraphicMidpoint().x - (spr.offsetShit.x) - spr.width, daSprite.y + spr.offsetShit.y);
     }
 }

@@ -97,5 +97,11 @@ class Player extends Character
             daSprite.animation.play("idle");
         }
 
+        if (daSprite.animation.curAnim.name == "punch")
+        {
+            velocity.x *= 0.2;
+            velocity.y *= 0.2;
+        }
+
     }
 }
