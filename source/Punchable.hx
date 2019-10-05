@@ -7,6 +7,7 @@ import flixel.FlxObject;
 import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.math.FlxRect;
+import flixel.math.FlxPoint;
 
 class Punchable extends FlxSpriteGroup
 {
@@ -16,6 +17,7 @@ class Punchable extends FlxSpriteGroup
     public var curAnimation:Int = 0;
 
     public var actualHealth:Float = 1;
+    public var invincibleFrames:Float = 0;
 
     public var hurtboxes:Array<Dynamic> = 
     [
@@ -47,6 +49,8 @@ class Punchable extends FlxSpriteGroup
 
         grpHitboxes = new FlxTypedSpriteGroup<Hitbox>();
         add(grpHitboxes);
+
+        drag.x = 300;
 
         generateHitboxes();
     }
@@ -88,15 +92,30 @@ class Punchable extends FlxSpriteGroup
         }
     }
 
-    public function getHurt(dmg:Float):Void
+    public function getHurt(dmg:Float, ?fromPos:FlxPoint):Void
     {
-        actualHealth -= dmg;
-        trace("OOF OUCH OWIE" + FlxG.random.int(0, 100));
+        if (invincibleFrames <= 0)
+        {
+            actualHealth -= dmg;
+            if (fromPos != null)
+            {
+                if (fromPos.x < x)
+                    velocity.x += 200;
+                if (fromPos.x > x)
+                    velocity.x -= 200; 
+            }
+
+            invincibleFrames = 0.8;
+            trace("OOF OUCH OWIE" + FlxG.random.int(0, 100));
+        }
     }
 
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
+
+        if (invincibleFrames > 0)
+            invincibleFrames -= FlxG.elapsed;
         
         if (actualHealth <= 0)
             alpha = 0.1;

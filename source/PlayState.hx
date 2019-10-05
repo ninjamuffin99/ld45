@@ -26,10 +26,13 @@ class PlayState extends FlxState
 		ground2.immovable = true;
 		add(ground2);
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.castleCrashersTempBG__jpg);
+		var bg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.beta_bg0__png);
 		bg.setGraphicSize(FlxG.width, FlxG.height);
 		bg.updateHitbox();
 		add(bg);
+
+		var bg4:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.beta_bg4__png);
+		add(bg4);
 
 		_player = new Player(100, 400);
 		add(_player);
@@ -64,10 +67,10 @@ class PlayState extends FlxState
 				});
 			*/
 
-			if (FlxG.overlap(e.grpHurtboxes, _player.grpHitboxes))
+			if (FlxG.overlap(e.grpHurtboxes, _player.grpHitboxes) && _player.isAttacking)
 			{
 				trace("HURTING???");
-				e.getHurt(0.1);
+				e.getHurt(0.5, _player.getPosition());
 			}
 
 			if (FlxG.overlap(_player.grpHurtboxes, e.grpHitboxes))
