@@ -5,9 +5,11 @@ import flixel.FlxG;
 import flixel.util.FlxColor;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxObject;
+import flixel.math.FlxPoint;
 
 class Player extends Character
-{    
+{
+    private var ogOffset:FlxPoint;
 
     public function new(X:Float, Y:Float)
     {
@@ -28,6 +30,7 @@ class Player extends Character
         daSprite.animation.addByPrefix("idle", "HoboIdle", 24, true);
         daSprite.animation.addByPrefix("punch", "HoboPunch", 24, false);
         daSprite.animation.addByPrefix("walk", "HoboWalk", 24, true);
+        daSprite.animation.addByPrefix("hurt", "HoboHurt", 20, false);
         daSprite.animation.play("idle");
 
         daSprite.setFacingFlip(FlxObject.LEFT, true, false);
@@ -46,6 +49,9 @@ class Player extends Character
         facing = FlxObject.RIGHT;
         drag.x = 700;
         drag.y = 700;
+
+        ogOffset = new FlxPoint(daSprite.offset.x, daSprite.offset.y);
+        trace(ogOffset);
     }
 
     override public function update(elapsed:Float):Void
@@ -53,6 +59,18 @@ class Player extends Character
         super.update(elapsed);
 
         movement();
+
+        FlxG.watch.addQuick("curANime", daSprite.animation.curAnim.name);
+        FlxG.watch.addQuick("offset", daSprite.offset);
+
+        animationFixins();
+    }
+
+    override public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void
+    {
+        super.getHurt(dmg, fromPos);
+
+        daSprite.animation.play("hurt", true);
     }
 
     private function movement():Void
@@ -129,5 +147,15 @@ class Player extends Character
             velocity.y *= 0.2;
         }
 
+    }
+
+    private function animationFixins():Void
+    {
+        if (daSprite.facing == FlxObject.LEFT && daSprite.animation.curAnim.name == "punch")
+        {
+            daSprite.offset.x = ogOffset.x + 50;
+        }
+        else
+            daSprite.offset.x = ogOffset.x;
     }
 }
