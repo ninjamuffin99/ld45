@@ -7,6 +7,7 @@ class Character extends Punchable
     public function new(X:Float, Y:Float)
     {
         super(X, Y);
+
     }
 
     override public function update(elapsed:Float):Void

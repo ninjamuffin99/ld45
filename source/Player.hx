@@ -10,7 +10,8 @@ class Player extends Character
     {
         super(X, Y);
 
-        color = FlxColor.BLUE;
+        daSprite.color = FlxColor.BLUE;
+        //testObj.color = FlxColor.RED;
     }
 
     override public function update(elapsed:Float):Void
