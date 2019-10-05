@@ -76,6 +76,7 @@ class Enemy extends Character
         if (attackTmr >= 1)
         {
             _player.getHurt(0.25, this);
+            attackTmr = 0;
         }
             
         if (!isAttacking)

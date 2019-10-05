@@ -55,7 +55,8 @@ class PlayState extends FlxState
 
 		grpEnemies.forEach(function(e:Enemy)
 		{
-			if (FlxMath.distanceToPoint(e.daSprite, _player.daSprite.getMidpoint()) < 300)
+			var distanceToPlayer:Float = FlxMath.distanceToPoint(e.daSprite, _player.daSprite.getMidpoint());
+			if (distanceToPlayer < 300 && distanceToPlayer > 40)
 			{
 				e.seesPlayer = true;
 				e.playerPos.copyFrom(_player.daSprite.getPosition());
