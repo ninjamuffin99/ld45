@@ -41,7 +41,7 @@ class PlayState extends FlxState
 		_player = new Player(100, 400);
 		add(_player);
 
-		var e:Enemy = new Enemy(_player.x + 300, _player.y);
+		var e:Enemy = new Enemy(_player.x + 300, _player.y, _player);
 		grpEnemies.add(e);
 
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
@@ -82,11 +82,14 @@ class PlayState extends FlxState
 				e.getHurt(0.5, _player);
 			}
 
-			if (FlxG.overlap(_player.grpHurtboxes, e.grpHitboxes))
+			if (FlxG.overlap(_player.grpHurtboxes, e.grpHitboxes) && _player.invincibleFrames <= 0)
 			{
 				trace("GETTING HURT???");
-				_player.getHurt(0.1);
+				e.isAttacking = true;
+					
 			}
+			else
+				e.isAttacking = false;
 		});
 
 		FlxG.collide(ground, _player);
