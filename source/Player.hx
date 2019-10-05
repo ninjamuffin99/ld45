@@ -12,7 +12,7 @@ class Player extends Character
     public function new(X:Float, Y:Float)
     {
         super(X, Y);
-        speed = 200;
+        speed = 230;
 
         daSprite.color = FlxColor.WHITE;
         var tex = FlxAtlasFrames.fromSpriteSheetPacker(AssetPaths.hoboSheet__png, AssetPaths.hoboSheet__txt);
@@ -54,8 +54,13 @@ class Player extends Character
         var _up:Bool = FlxG.keys.anyPressed(["UP", "W"]);
         var _down:Bool = FlxG.keys.anyPressed(["DOWN", "S"]);
 
+        speed = 230;
+
         if (_left && _right)
             _left = _right = false;
+
+        if (FlxG.keys.pressed.SHIFT)
+            speed *= 1.6;
 
         if (_left || _right)
         {
