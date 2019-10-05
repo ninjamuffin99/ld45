@@ -4,6 +4,7 @@ import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
+import flixel.math.FlxMath;
 
 class PlayState extends FlxState
 {
@@ -54,6 +55,14 @@ class PlayState extends FlxState
 
 		grpEnemies.forEach(function(e:Enemy)
 		{
+			if (FlxMath.distanceToPoint(e.daSprite, _player.daSprite.getMidpoint()) < 300)
+			{
+				e.seesPlayer = true;
+				e.playerPos.copyFrom(_player.daSprite.getPosition());
+			}
+			else
+				e.seesPlayer = false;
+
 			/*
 				_player.grpHurtboxes.forEach(function(pHit:Hitbox)
 				{
@@ -70,7 +79,7 @@ class PlayState extends FlxState
 			if (FlxG.overlap(e.grpHurtboxes, _player.grpHitboxes) && _player.isAttacking)
 			{
 				trace("HURTING???");
-				e.getHurt(0.5, _player.getPosition());
+				e.getHurt(0.5, _player);
 			}
 
 			if (FlxG.overlap(_player.grpHurtboxes, e.grpHitboxes))
@@ -82,6 +91,9 @@ class PlayState extends FlxState
 
 		FlxG.collide(ground, _player);
 		FlxG.collide(ground2, _player);
+
+		FlxG.collide(ground, grpEnemies);
+		FlxG.collide(ground2, grpEnemies);
 	
 	}
 }

@@ -92,7 +92,7 @@ class Punchable extends FlxSpriteGroup
         }
     }
 
-    public function getHurt(dmg:Float, ?fromPos:FlxPoint):Void
+    public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void
     {
         if (invincibleFrames <= 0)
         {
@@ -100,9 +100,9 @@ class Punchable extends FlxSpriteGroup
             if (fromPos != null)
             {
                 if (fromPos.x < x)
-                    velocity.x += 200;
+                    velocity.x = 200 + (fromPos.velocity.x * 1);
                 if (fromPos.x > x)
-                    velocity.x -= 200; 
+                    velocity.x = -200 + (fromPos.velocity.x * 1); 
             }
 
             invincibleFrames = 0.8;
