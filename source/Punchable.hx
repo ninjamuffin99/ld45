@@ -8,6 +8,7 @@ import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.math.FlxRect;
 import flixel.math.FlxPoint;
+import flixel.effects.FlxFlicker;
 
 class Punchable extends FlxSpriteGroup
 {
@@ -25,6 +26,8 @@ class Punchable extends FlxSpriteGroup
             [-30, -85, 60, 100]
         ]
     ];
+
+    private var ogDrag:FlxPoint;
 
     public var hitboxes:Array<Dynamic> =
     [
@@ -100,9 +103,9 @@ class Punchable extends FlxSpriteGroup
             if (fromPos != null)
             {
                 if (fromPos.x < x)
-                    velocity.x = 200 + (fromPos.velocity.x * 1);
+                    velocity.x = 200 + (fromPos.velocity.x * 1.5);
                 if (fromPos.x > x)
-                    velocity.x = -200 + (fromPos.velocity.x * 1); 
+                    velocity.x = -200 + (fromPos.velocity.x * 1.5); 
             }
 
             invincibleFrames = 0.8;
@@ -114,8 +117,20 @@ class Punchable extends FlxSpriteGroup
     {
         super.update(elapsed);
 
+        
+
+
         if (invincibleFrames > 0)
+        {
+            if (!FlxFlicker.isFlickering(this))
+                FlxFlicker.flicker(this, 0.8, 0.05, true, true);
+            
             invincibleFrames -= FlxG.elapsed;
+        }
+        else
+
+            //visible = true;
+            
         
         if (actualHealth <= 0)
             alpha = 0.1;
@@ -130,6 +145,7 @@ class Punchable extends FlxSpriteGroup
             setSpritePos(spr);
 
         });
+
         // testObj.setPosition(daSprite.x + hurtboxes[0][0][0], daSprite.y + hurtboxes[0][0][1]);
 
     }

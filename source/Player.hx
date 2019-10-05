@@ -38,6 +38,10 @@ class Player extends Character
         {
             spr.color = FlxColor.RED;
         });
+
+        facing = FlxObject.RIGHT;
+        drag.x = 700;
+        drag.y = 700;
     }
 
     override public function update(elapsed:Float):Void
@@ -77,8 +81,6 @@ class Player extends Character
             }
                 
         }
-        else
-            velocity.x = 0;
 
         if (_up || _down)
         {
@@ -87,10 +89,8 @@ class Player extends Character
             if (_down)
                 velocity.y = speed;
         }
-        else
-            velocity.y = 0;
         
-        if (FlxG.keys.justPressed.SPACE)
+        if (FlxG.keys.justPressed.SPACE && canAttack)
         {
             isAttacking = true;
             daSprite.animation.play("punch", true);
