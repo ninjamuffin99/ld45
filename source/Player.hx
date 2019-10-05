@@ -9,9 +9,19 @@ class Player extends Character
     public function new(X:Float, Y:Float)
     {
         super(X, Y);
+        speed = 200;
 
-        daSprite.color = FlxColor.BLUE;
-        //testObj.color = FlxColor.RED;
+        daSprite.color = FlxColor.WHITE;
+
+        grpHurtboxes.forEach(function(spr:Hitbox)
+        {
+            spr.color = FlxColor.GREEN;
+        });
+
+        grpHitboxes.forEach(function(spr:Hitbox)
+        {
+            spr.color = FlxColor.RED;
+        });
     }
 
     override public function update(elapsed:Float):Void

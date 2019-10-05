@@ -3,12 +3,14 @@ package;
 import flixel.FlxState;
 import flixel.FlxSprite;
 import flixel.FlxG;
+import flixel.group.FlxGroup;
 
 class PlayState extends FlxState
 {
 	private var ground:FlxSprite;
 	private var ground2:FlxSprite;
 	private var _player:Player;
+	private var grpEnemies:FlxTypedGroup<Enemy>;
 
 	override public function create():Void
 	{
@@ -32,14 +34,51 @@ class PlayState extends FlxState
 		_player = new Player(100, 400);
 		add(_player);
 
+		grpEnemies = new FlxTypedGroup<Enemy>();
+		add(grpEnemies);
+
+		var e:Enemy = new Enemy(_player.x + 300, _player.y);
+		grpEnemies.add(e);
+
+		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
+
 		super.create();
 	}
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		
+
+		grpEnemies.forEach(function(e:Enemy)
+		{
+			/*
+				_player.grpHurtboxes.forEach(function(pHit:Hitbox)
+				{
+					e.grpHurtboxes.forEach(function(eHurt:Hitbox)
+					{
+						if (FlxG.overlap(pHit, eHurt))
+						{
+							e.getHurt(0.1);
+						}
+					});
+				});
+			*/
+
+			if (FlxG.overlap(e.grpHurtboxes, _player.grpHitboxes))
+			{
+				trace("HURTING???");
+				e.getHurt(0.1);
+			}
+
+			if (FlxG.overlap(_player.grpHurtboxes, e.grpHitboxes))
+			{
+				trace("GETTING HURT???");
+				_player.getHurt(0.1);
+			}
+		});
+
 		FlxG.collide(ground, _player);
 		FlxG.collide(ground2, _player);
+	
 	}
 }
