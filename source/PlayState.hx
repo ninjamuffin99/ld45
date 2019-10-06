@@ -6,6 +6,7 @@ import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.util.FlxSort;
+import flixel.math.FlxVector;
 
 class PlayState extends FlxState
 {
@@ -45,7 +46,7 @@ class PlayState extends FlxState
 		add(_player.grpHurtboxes);
 
 		var e:Enemy = new Enemy(_player.x + 300, _player.y, _player);
-		grpCharacters.add(e);
+		//grpCharacters.add(e);
 		add(e.grpHitboxes);
 		add(e.grpHurtboxes);
 
@@ -68,8 +69,13 @@ class PlayState extends FlxState
 			
 			if (c.CHAR_TYPE == c.TypeENEMY)
 			{
-				var distanceToPlayer:Float = FlxMath.distanceToPoint(c, _player.getMidpoint());
-				if (distanceToPlayer < 300 && distanceToPlayer > 70 && !_player.isDead)
+				var dx:Float = c.getMidpoint().x - _player.getMidpoint().x;
+				var dy:Float = c.getMidpoint().y - _player.getMidpoint().y;
+				var distanceToPlayer:Int = Std.int(FlxMath.vectorLength(dx, dy));
+
+				FlxG.watch.addQuick("Dist to player", distanceToPlayer);
+
+				if (distanceToPlayer < 300 && !_player.isDead)
 				{
 					c.seesPlayer = true;
 					c.playerPos.copyFrom(_player.getPosition());
@@ -79,13 +85,11 @@ class PlayState extends FlxState
 
 				if (FlxG.overlap(c.grpHurtboxes, _player.grpHitboxes) && _player.isAttacking)
 				{
-					trace("HURTING???");
 					c.getHurt(0.5, _player);
 				}
 
 				if (FlxG.overlap(_player.grpHurtboxes, c.grpHitboxes) && _player.invincibleFrames <= 0)
 				{
-					trace("GETTING HURT???");
 					c.isAttacking = true;
 						
 				}

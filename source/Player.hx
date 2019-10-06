@@ -68,6 +68,7 @@ class Player extends Character
         super.update(elapsed);
 
         FlxG.watch.addQuick("FullPos", getPosition());
+        FlxG.watch.addQuick("OriginPlayer", origin);
         
         /* 
         if (getPosition().x != daSprite.getPosition().x)

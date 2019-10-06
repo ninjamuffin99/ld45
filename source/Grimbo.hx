@@ -14,6 +14,7 @@ class Grimbo extends Enemy
         setGraphicSize(0, 100);
         updateHitbox();
         antialiasing = true;
+        offset.y += 90;
         width -= 80;
         height = 15;
         generateHitboxes();
@@ -27,7 +28,7 @@ class Grimbo extends Enemy
     {
         super.update(elapsed);
 
-        FlxG.watch.addQuick("daSpritePos", getPosition());
-        FlxG.watch.addQuick("Distances", FlxMath.distanceToPoint(this, _player.getMidpoint()));
+        FlxG.watch.addQuick("Grimbo Position", getPosition());
+        FlxG.watch.addQuick("Grimbo Origin", origin);
     }
 }

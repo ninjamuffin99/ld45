@@ -4,6 +4,8 @@ import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.math.FlxVelocity;
 import flixel.FlxObject;
+import flixel.math.FlxMath;
+import flixel.math.FlxAngle;
 
 class Enemy extends Character
 {
@@ -65,7 +67,13 @@ class Enemy extends Character
         }
         else if (invincibleFrames <= 0)
         {
-            FlxVelocity.moveTowardsPoint(this, playerPos, Std.int(speed));
+            var rads:Float = Math.atan2(_player.getMidpoint().y - getMidpoint().y, _player.getMidpoint().x - getMidpoint().x);
+		    var degs = FlxAngle.asDegrees(rads);
+
+            velocity.set(speed, 0);
+            velocity.rotate(FlxPoint.weak(0, 0), degs);
+
+            //FlxVelocity.moveTowardsPoint(this, playerPos, Std.int(speed));
         }
         
         if (isAttacking)
