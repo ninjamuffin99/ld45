@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.math.FlxMath;
 import flixel.FlxObject;
 import flixel.math.FlxPoint;
+import flixel.FlxSprite;
 
 class Grimbo extends Enemy
 {
@@ -27,6 +28,7 @@ class Grimbo extends Enemy
         animation.addByPrefix("idle", "GrimboIdle", 24);
         animation.addByPrefix("walk", "GrimboWalk", 24);
         animation.addByPrefix("attack", "GrimboAttack", 24, false);
+        animation.add("hit", [25, 25, 25, 25], 12);
         attackWindup = 0.4;
         actualCooldownLol = 0.9;
         animation.play("idle");
@@ -65,6 +67,12 @@ class Grimbo extends Enemy
     {
         super.chase();
 
+    }
+
+    override public function getHurt(dmg:Float, ?pos:FlxSprite):Void
+    {
+        super.getHurt(dmg, pos);
+        animation.play("hit");
     }
 
     override private function animationFixins():Void

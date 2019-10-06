@@ -13,6 +13,8 @@ class Character extends Punchable
     public var attackCooldown:Float = 0;
     public var canAttack:Bool = true;
 
+    public var paralyzed:Float = 0;
+
     public var CHAR_TYPE:Int = 0;
     public static inline var ENEMY:Int = 10;
     public static inline var PLAYER:Int = 1;
@@ -37,26 +39,29 @@ class Character extends Punchable
 
         FlxG.watch.addQuick("Can Attack", canAttack);
         FlxG.watch.addQuick("Just attackd", justAttacked);
-
-        if (justAttacked)
-        {
-            attackCooldown = actualCooldownLol;
-        }
-
         FlxG.watch.addQuick("Attack cooldown", attackCooldown);
-
-        if (attackCooldown > 0)
-        {   
+        
+        if (paralyzed <= 0)
+        {
             if (justAttacked)
-                successfulAttack = true;
-            else
-                successfulAttack = false;
+            {
+                attackCooldown = actualCooldownLol;
+            }
 
-            attackCooldown -= FlxG.elapsed;
-            canAttack = false;
+            if (attackCooldown > 0)
+            {   
+                if (justAttacked)
+                    successfulAttack = true;
+                else
+                    successfulAttack = false;
+
+                attackCooldown -= FlxG.elapsed;
+                canAttack = false;
+            }
+            else
+                canAttack = true;
         }
-        else
-            canAttack = true;
+       
             
     }
 

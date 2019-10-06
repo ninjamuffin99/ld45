@@ -17,6 +17,8 @@ class PlayState extends FlxState
 	private var grpCharacters:FlxTypedGroup<Character>;
 	private var grpItems:FlxTypedGroup<Item>;
 
+	private var fg:FlxSprite;
+
 	override public function create():Void
 	{
 		trace("BOOTED UP");
@@ -68,7 +70,8 @@ class PlayState extends FlxState
 		var bg4:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_6__png);
 		add(bg4);
 
-		var fg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_7__png);
+		fg = new FlxSprite(0, 10).loadGraphic(AssetPaths.bg1_7__png);
+		fg.alpha = 1;
 		fg.scrollFactor.set(2.2, 2.2);
 		//gets added after the player
 		
@@ -120,6 +123,22 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+		if (_player.x > 460 && _player.x < 900)
+		{
+			if (fg.alpha > 0.3)
+			{
+				fg.alpha -= FlxG.elapsed;
+			}
+			
+		}
+		else
+		{
+			if (fg.alpha < 1)
+			{
+				fg.alpha += FlxG.elapsed;
+			}
+		}
 
 		var gamepad = FlxG.gamepads.lastActive;
 		if (gamepad != null)
