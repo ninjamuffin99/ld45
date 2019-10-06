@@ -209,7 +209,9 @@ class Player extends Character
             var gamepad = FlxG.gamepads.lastActive;
             if (gamepad != null)
             {
-                velocity.x = speed * gamepad.analog.value.LEFT_STICK_X;
+                if (gamepad.analog.value.LEFT_STICK_X != 0)
+                    velocity.x = speed * gamepad.analog.value.LEFT_STICK_X;
+                if (gamepad.analog.value.LEFT_STICK_Y != 0)
                 velocity.y = speed * gamepad.analog.value.LEFT_STICK_Y;
             }
 
