@@ -46,9 +46,6 @@ class Grimbo extends Enemy
     {
         super.update(elapsed);
 
-        FlxG.watch.addQuick("Grimbo Position", getPosition());
-        FlxG.watch.addQuick("Grimbo Origin", origin);
-
         if (invincibleFrames <= 0 && !isAttacking)
         {
             if (velocity.x != 0 || velocity.y != 0)

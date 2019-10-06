@@ -14,6 +14,7 @@ class PlayState extends FlxState
 	private var ground2:FlxSprite;
 	private var _player:Player;
 	private var grpCharacters:FlxTypedGroup<Character>;
+	private var grpItems:FlxTypedGroup<Item>;
 
 	override public function create():Void
 	{
@@ -29,13 +30,16 @@ class PlayState extends FlxState
 		ground2.immovable = true;
 		add(ground2);
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.beta_bg0__png);
+		var bg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_1__png);
 		bg.setGraphicSize(FlxG.width, FlxG.height);
 		bg.updateHitbox();
 		add(bg);
 
-		var bg4:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.beta_bg4__png);
+		var bg4:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_6__png);
 		add(bg4);
+
+		grpItems = new FlxTypedGroup<Item>();
+		add(grpItems);
 
 		grpCharacters = new FlxTypedGroup<Character>();
 		add(grpCharacters);
@@ -77,6 +81,12 @@ class PlayState extends FlxState
 			}
 		}
 
+		FlxG.overlap(grpItems, _player, function(item:Item, p:Player)
+		{
+			item.kill();
+			p.actualHealth += 0.25;
+		});
+
 		grpCharacters.forEach(function(c:Character)
 		{
 			
@@ -112,8 +122,13 @@ class PlayState extends FlxState
 					c.isAttacking = false;
 				
 				if (!c.alive)
-					grpCharacters.remove(c, true);
+				{
+					// if (FlxG.random.bool(10))
+					//var health:HealthPack = new HealthPack(c.getPosition().x, c.getPosition().y);
+					//grpItems.add(health);
 
+					grpCharacters.remove(c, true);
+				}
 			}
 		});
 
@@ -121,6 +136,7 @@ class PlayState extends FlxState
 
 		FlxG.collide(ground, grpCharacters);
 		FlxG.collide(ground2, grpCharacters);
+		FlxG.collide(grpCharacters, grpCharacters);
 	
 	}
 }
