@@ -159,8 +159,6 @@ class PlayState extends FlxState
 				var dy:Float = c.getMidpoint().y - _player.getMidpoint().y;
 				var distanceToPlayer:Int = Std.int(FlxMath.vectorLength(dx, dy));
 
-				FlxG.watch.addQuick("Dist to player", distanceToPlayer);
-
 				if (distanceToPlayer < 300 && !_player.isDead)
 				{
 					c.seesPlayer = true;
@@ -169,7 +167,7 @@ class PlayState extends FlxState
 				else
 					c.seesPlayer = false;
 
-				if (FlxG.overlap(c.grpHurtboxes, _player.grpHitboxes) && _player.isAttacking)
+				if (FlxG.overlap(c.grpHurtboxes, _player.grpHitboxes) && _player.successfulAttack)
 				{
 					c.getHurt(0.5, _player);
 				}
@@ -177,10 +175,10 @@ class PlayState extends FlxState
 				if (FlxG.overlap(_player.grpHurtboxes, c.grpHitboxes) && _player.invincibleFrames <= 0)
 				{
 					c.isAttacking = true;
-						
+					c.attackOverlapping = true;
 				}
 				else
-					c.isAttacking = false;
+					c.attackOverlapping = false;
 				
 				if (!c.alive)
 				{

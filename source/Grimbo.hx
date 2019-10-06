@@ -27,7 +27,7 @@ class Grimbo extends Enemy
         animation.addByPrefix("idle", "GrimboIdle", 24);
         animation.addByPrefix("walk", "GrimboWalk", 24);
         animation.addByPrefix("attack", "GrimboAttack", 24, false);
-        attackWindup = 0.3;
+        attackWindup = 0.5;
         animation.play("idle");
 
         setFacingFlip(FlxObject.LEFT, false, false);
@@ -40,12 +40,16 @@ class Grimbo extends Enemy
     override public function attackPlayer():Void
     {
         super.attackPlayer();
-        animation.play("attack");
+        if (successfulAttack)
+            animation.play("attack");
     }
 
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
+
+        FlxG.watch.addQuick("WINDUP", attackWindup);
+        FlxG.watch.addQuick("TIMER", attackTmr);
 
         if (invincibleFrames <= 0 && !isAttacking)
         {

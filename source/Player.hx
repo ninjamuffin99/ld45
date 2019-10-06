@@ -71,10 +71,6 @@ class Player extends Character
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
-
-
-        FlxG.watch.addQuick("FullPos", getPosition());
-        FlxG.watch.addQuick("OriginPlayer", origin);
         
         /* 
         if (getPosition().x != daSprite.getPosition().x)
@@ -98,7 +94,6 @@ class Player extends Character
 
         FlxG.watch.addQuick("curANime", animation.curAnim.name);
         FlxG.watch.addQuick("offset", offset);
-
     }
 
     override public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void
@@ -129,7 +124,6 @@ class Player extends Character
         var gamepad = FlxG.gamepads.lastActive;
 		if (gamepad != null)
 		{
-            FlxG.watch.addQuick("AnalogSHit", gamepad.analog.value.LEFT_STICK_X);
 			if (gamepad.anyPressed(["LEFT", "DPAD_LEFT", "LEFT_STICK_DIGITAL_LEFT"]))
 			{
 				_left = true;
@@ -300,10 +294,11 @@ class Player extends Character
             if (velocity.x == 0 && velocity.y == 0)
                 rolling = false;
         }
+        
+        justAttacked = _attack;
 
         if (_attack && canAttack && !blocking)
         {
-            isAttacking = true;
             animation.play("punch", true);
         }
 

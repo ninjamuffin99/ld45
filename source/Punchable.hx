@@ -47,9 +47,11 @@ class Punchable extends FlxSprite
         height = daOffsetY;
 
         grpHurtboxes = new FlxTypedSpriteGroup<Hitbox>();
+        grpHurtboxes.visible = false;
         //add(grpHurtboxes);
 
         grpHitboxes = new FlxTypedSpriteGroup<Hitbox>();
+        grpHitboxes.visible = false;
         //add(grpHitboxes);
 
         drag.x = 300;

@@ -6,6 +6,9 @@ class Character extends Punchable
 {
     private var speed:Float = 100;
     public var isAttacking:Bool = false;
+    public var justAttacked:Bool = false;
+    public var attackOverlapping:Bool = false;
+    public var successfulAttack:Bool = false;
     public var attackCooldown:Float = 0;
     public var canAttack:Bool = true;
 
@@ -25,16 +28,29 @@ class Character extends Punchable
 
     }
 
-    override public function update(elapsed:Float):Void
+    override public function update(e:Float):Void
     {
-        super.update(elapsed);
+        super.update(e);
+
         animationFixins();
 
-        if (isAttacking)
+        FlxG.watch.addQuick("Can Attack", canAttack);
+        FlxG.watch.addQuick("Just attackd", justAttacked);
+
+        if (justAttacked)
+        {
             attackCooldown = 0.3;
+        }
+
+        FlxG.watch.addQuick("Attack cooldown", attackCooldown);
 
         if (attackCooldown > 0)
         {   
+            if (justAttacked)
+                successfulAttack = true;
+            else
+                successfulAttack = false;
+
             attackCooldown -= FlxG.elapsed;
             canAttack = false;
         }
