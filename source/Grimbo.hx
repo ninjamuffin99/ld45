@@ -2,6 +2,7 @@ package;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxG;
 import flixel.math.FlxMath;
+import flixel.FlxObject;
 
 class Grimbo extends Enemy
 {
@@ -20,7 +21,11 @@ class Grimbo extends Enemy
         generateHitboxes();
 
         animation.addByPrefix("idle", "GrimboIdle", 24);
+        animation.addByPrefix("walk", "GrimboWalk", 24);
         animation.play("idle");
+
+        setFacingFlip(FlxObject.LEFT, false, false);
+        setFacingFlip(FlxObject.RIGHT, true, false);
         
     }
 
@@ -30,5 +35,13 @@ class Grimbo extends Enemy
 
         FlxG.watch.addQuick("Grimbo Position", getPosition());
         FlxG.watch.addQuick("Grimbo Origin", origin);
+
+        if (invincibleFrames <= 0)
+        {
+            if (velocity.x != 0)
+                animation.play("walk");
+            else
+                animation.play("idle");
+        }
     }
 }

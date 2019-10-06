@@ -149,6 +149,8 @@ class Punchable extends FlxSprite
 
     private function getKilled():Void
     {
+        grpHitboxes.kill();
+        grpHurtboxes.kill();
 
     }
 
