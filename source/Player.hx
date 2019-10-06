@@ -9,13 +9,12 @@ import flixel.math.FlxPoint;
 
 class Player extends Character
 {
-    private var ogOffset:FlxPoint;
 
     public function new(X:Float, Y:Float)
     {
         super(X, Y);
 
-        CHAR_TYPE = TypePLAYER;
+        CHAR_TYPE = Character.PLAYER;
 
         speed = 230;
 
@@ -93,7 +92,6 @@ class Player extends Character
         FlxG.watch.addQuick("curANime", animation.curAnim.name);
         FlxG.watch.addQuick("offset", offset);
 
-        animationFixins();
     }
 
     override public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void
@@ -189,8 +187,9 @@ class Player extends Character
         super.getKilled();
     }
 
-    private function animationFixins():Void
+    override private function animationFixins():Void
     {
+        super.animationFixins();
         if (facing == FlxObject.LEFT && animation.curAnim.name == "punch")
         {
             offset.x = ogOffset.x + 50;

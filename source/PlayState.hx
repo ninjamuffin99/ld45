@@ -67,7 +67,7 @@ class PlayState extends FlxState
 		grpCharacters.forEach(function(c:Character)
 		{
 			
-			if (c.CHAR_TYPE == c.TypeENEMY)
+			if (c.CHAR_TYPE == Character.ENEMY)
 			{
 				var dx:Float = c.getMidpoint().x - _player.getMidpoint().x;
 				var dy:Float = c.getMidpoint().y - _player.getMidpoint().y;

@@ -21,7 +21,7 @@ class Enemy extends Character
         super(X, Y);
         generateHitboxes();
 
-        CHAR_TYPE = TypeENEMY;
+        CHAR_TYPE = Character.ENEMY;
         offset.y -= 20;
         height += 20;
 

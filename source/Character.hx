@@ -10,12 +10,14 @@ class Character extends Punchable
     public var canAttack:Bool = true;
 
     public var CHAR_TYPE:Int = 0;
-    public var TypeENEMY:Int = 10;
-    public var TypePLAYER:Int = 1;
+    public static inline var ENEMY:Int = 10;
+    public static inline var PLAYER:Int = 1;
+    public static inline var GRIMBO:Int = 11;
     public var seesPlayer:Bool = false;
     public var playerPos(default, null):FlxPoint;
 
     public var isDead:Bool = false;
+    private var ogOffset:FlxPoint;
 
     public function new(X:Float, Y:Float)
     {
@@ -26,6 +28,7 @@ class Character extends Punchable
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
+        animationFixins();
 
         if (isAttacking)
             attackCooldown = 0.3;
@@ -38,5 +41,9 @@ class Character extends Punchable
         else
             canAttack = true;
             
+    }
+
+    private function animationFixins():Void
+    {
     }
 }
