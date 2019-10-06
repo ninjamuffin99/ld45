@@ -41,6 +41,8 @@ class PlayState extends FlxState
 
 		_player = new Player(100, 400);
 		grpCharacters.add(_player);
+		add(_player.grpHitboxes);
+		add(_player.grpHurtboxes);
 
 		var e:Enemy = new Enemy(_player.x + 300, _player.y, _player);
 		grpCharacters.add(e);
@@ -62,11 +64,11 @@ class PlayState extends FlxState
 			
 			if (c.CHAR_TYPE == c.TypeENEMY)
 			{
-				var distanceToPlayer:Float = FlxMath.distanceToPoint(c.daSprite, _player.daSprite.getMidpoint());
+				var distanceToPlayer:Float = FlxMath.distanceToPoint(c, _player.getMidpoint());
 				if (distanceToPlayer < 300 && distanceToPlayer > 70 && !_player.isDead)
 				{
 					c.seesPlayer = true;
-					c.playerPos.copyFrom(_player.daSprite.getPosition());
+					c.playerPos.copyFrom(_player.getPosition());
 				}
 				else
 					c.seesPlayer = false;

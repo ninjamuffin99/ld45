@@ -20,8 +20,8 @@ class Enemy extends Character
         generateHitboxes();
 
         CHAR_TYPE = TypeENEMY;
-        daSprite.offset.y -= 20;
-        daSprite.height += 20;
+        offset.y -= 20;
+        height += 20;
 
         _brain = new FSM(idle);
         _idleTmr = 0;

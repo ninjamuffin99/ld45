@@ -19,26 +19,26 @@ class Player extends Character
 
         speed = 230;
 
-        daSprite.color = FlxColor.WHITE;
+        color = FlxColor.WHITE;
         var tex = FlxAtlasFrames.fromSparrow(AssetPaths.HoboMoveSet__png, AssetPaths.HoboMoveSet__xml);
-        daSprite.frames = tex;
-        daSprite.setGraphicSize(0, 100);
-        daSprite.updateHitbox();
-        daSprite.antialiasing = true;
-        daSprite.offset.y = 165;
-         var daOffsetY:Float = daSprite.height - daSprite.offset.y;
-        daSprite.height = 15;
+        frames = tex;
+        setGraphicSize(0, 100);
+        updateHitbox();
+        antialiasing = true;
+        offset.y = 165;
+        var daOffsetY:Float = height - offset.y;
+        height = 15;
         generateHitboxes();
 
-        daSprite.animation.addByPrefix("idle", "HoboIdle", 24, true);
-        daSprite.animation.addByPrefix("punch", "HoboPunch", 24, false);
-        daSprite.animation.addByPrefix("walk", "HoboWalk", 24, true);
-        daSprite.animation.addByPrefix("hurt", "HoboHurt", 20, false);
-        daSprite.animation.addByPrefix("killed", "HoboDeath", 24, false);
-        daSprite.animation.play("idle");
+        animation.addByPrefix("idle", "HoboIdle", 24, true);
+        animation.addByPrefix("punch", "HoboPunch", 24, false);
+        animation.addByPrefix("walk", "HoboWalk", 24, true);
+        animation.addByPrefix("hurt", "HoboHurt", 20, false);
+        animation.addByPrefix("killed", "HoboDeath", 24, false);
+        animation.play("idle");
 
-        daSprite.setFacingFlip(FlxObject.LEFT, true, false);
-        daSprite.setFacingFlip(FlxObject.RIGHT, false, false);
+        setFacingFlip(FlxObject.LEFT, true, false);
+        setFacingFlip(FlxObject.RIGHT, false, false);
 
         grpHurtboxes.forEach(function(spr:Hitbox)
         {
@@ -57,7 +57,7 @@ class Player extends Character
         drag.x = 700;
         drag.y = 700;
 
-        ogOffset = new FlxPoint(daSprite.offset.x, daSprite.offset.y);
+        ogOffset = new FlxPoint(offset.x, offset.y);
         trace(ogOffset);
     }
 
@@ -68,7 +68,6 @@ class Player extends Character
         super.update(elapsed);
 
         FlxG.watch.addQuick("FullPos", getPosition());
-        FlxG.watch.addQuick("SpritePos", daSprite.getPosition());
         
         /* 
         if (getPosition().x != daSprite.getPosition().x)
@@ -90,8 +89,8 @@ class Player extends Character
         }
         
 
-        FlxG.watch.addQuick("curANime", daSprite.animation.curAnim.name);
-        FlxG.watch.addQuick("offset", daSprite.offset);
+        FlxG.watch.addQuick("curANime", animation.curAnim.name);
+        FlxG.watch.addQuick("offset", offset);
 
         animationFixins();
     }
@@ -100,7 +99,7 @@ class Player extends Character
     {
         super.getHurt(dmg, fromPos);
 
-        daSprite.animation.play("hurt", true);
+        animation.play("hurt", true);
     }
 
     private function movement():Void
@@ -124,14 +123,14 @@ class Player extends Character
             {
                 if (_left)
                 {
-                    daSprite.facing = FlxObject.LEFT;
+                    facing = FlxObject.LEFT;
                     velocity.x = -speed;
                     
                 }
                     
                 if (_right)
                 {
-                    daSprite.facing = FlxObject.RIGHT;
+                    facing = FlxObject.RIGHT;
                     velocity.x = speed;
                 }
 
@@ -148,13 +147,13 @@ class Player extends Character
                 
             }
 
-            if (daSprite.animation.curAnim.name == "idle")
-                daSprite.animation.play("walk");
+            if (animation.curAnim.name == "idle")
+                animation.play("walk");
         }
         else
         {
-            if (daSprite.animation.curAnim.name == "walk")
-                daSprite.animation.play("idle");
+            if (animation.curAnim.name == "walk")
+                animation.play("idle");
         }
             
         
@@ -162,16 +161,16 @@ class Player extends Character
         if (FlxG.keys.justPressed.SPACE && canAttack)
         {
             isAttacking = true;
-            daSprite.animation.play("punch", true);
+            animation.play("punch", true);
         }
 
-        if (daSprite.animation.curAnim.name != "idle" && daSprite.animation.curAnim.finished)
+        if (animation.curAnim.name != "idle" && animation.curAnim.finished)
         {
             isAttacking = false;
-            daSprite.animation.play("idle");
+            animation.play("idle");
         }
 
-        if (daSprite.animation.curAnim.name == "punch")
+        if (animation.curAnim.name == "punch")
         {
             velocity.x *= 0.2;
             velocity.y *= 0.2;
@@ -181,8 +180,8 @@ class Player extends Character
 
     override private function getKilled():Void
     {
-        if (daSprite.animation.curAnim.name != "killed")
-            daSprite.animation.play("killed");
+        if (animation.curAnim.name != "killed")
+            animation.play("killed");
         
         isDead = true;
 
@@ -191,11 +190,11 @@ class Player extends Character
 
     private function animationFixins():Void
     {
-        if (daSprite.facing == FlxObject.LEFT && daSprite.animation.curAnim.name == "punch")
+        if (facing == FlxObject.LEFT && animation.curAnim.name == "punch")
         {
-            daSprite.offset.x = ogOffset.x + 50;
+            offset.x = ogOffset.x + 50;
         }
         else
-            daSprite.offset.x = ogOffset.x;
+            offset.x = ogOffset.x;
     }
 }
