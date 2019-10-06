@@ -45,6 +45,9 @@ class PlayState extends FlxState
 		var e:Enemy = new Enemy(_player.x + 300, _player.y, _player);
 		grpCharacters.add(e);
 
+		var g:Grimbo = new Grimbo(e.x + 100, e.y - 100, _player);
+		grpCharacters.add(g);
+
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
 
 		super.create();
