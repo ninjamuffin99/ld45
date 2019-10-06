@@ -51,15 +51,17 @@ class Grimbo extends Enemy
 
         if (invincibleFrames <= 0 && !isAttacking)
         {
-            if (animation.curAnim.name == "attack" && animation.curAnim.finished)
-            {
-                if (velocity.x != 0 || velocity.y != 0)
-                    animation.play("walk");
-                else if (animation.curAnim.name != "idle")
-                    animation.play("idle");
-            }
-            
+            if (velocity.x != 0 || velocity.y != 0)
+                animation.play("walk");
+            else if (animation.curAnim.name != "idle")
+                animation.play("idle");     
         }
+    }
+
+    override public function chase():Void  
+    {
+        super.chase();
+
     }
 
     override private function animationFixins():Void
