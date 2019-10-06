@@ -14,6 +14,7 @@ class Enemy extends Character
     private var _moveDir:Float;
 
     private var attackTmr:Float = 0;
+    private var attackWindup:Float = 1;
     private var _player:Player;
 
     public function new(X:Float, Y:Float, p:Player)
@@ -84,7 +85,7 @@ class Enemy extends Character
     {
         attackTmr += FlxG.elapsed;
 
-        if (attackTmr >= 1)
+        if (attackTmr >= attackWindup)
         {
             _player.getHurt(0.25, this);
             attackTmr = 0;

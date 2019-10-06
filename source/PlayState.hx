@@ -97,25 +97,9 @@ class PlayState extends FlxState
 					c.isAttacking = false;
 
 			}
-			
-			/*
-				_player.grpHurtboxes.forEach(function(pHit:Hitbox)
-				{
-					e.grpHurtboxes.forEach(function(eHurt:Hitbox)
-					{
-						if (FlxG.overlap(pHit, eHurt))
-						{
-							e.getHurt(0.1);
-						}
-					});
-				});
-			*/
-
-			
 		});
 
 		grpCharacters.sort(Punchable.bySprite, FlxSort.ASCENDING);
-
 
 		FlxG.collide(ground, grpCharacters);
 		FlxG.collide(ground2, grpCharacters);
