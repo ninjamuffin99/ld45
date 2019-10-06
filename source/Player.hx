@@ -36,6 +36,7 @@ class Player extends Character
         animation.addByPrefix("hurt", "HoboHurt", 20, false);
         animation.addByPrefix("killed", "HoboDeath", 24, false);
         animation.addByPrefix("block", "HoboBlock", 24, false);
+        animation.addByPrefix("roll", "HoboRoll", 24, false);
         animation.play("idle");
 
         setFacingFlip(FlxObject.LEFT, true, false);
@@ -68,6 +69,7 @@ class Player extends Character
     {
         super.update(elapsed);
 
+
         FlxG.watch.addQuick("FullPos", getPosition());
         FlxG.watch.addQuick("OriginPlayer", origin);
         
@@ -86,7 +88,7 @@ class Player extends Character
         {
             resetTimer += FlxG.elapsed;
 
-            if (resetTimer >= 3)
+            if (resetTimer >= 1.5)
                 FlxG.resetState();
         }
         
@@ -176,7 +178,7 @@ class Player extends Character
         if (_left && _right)
             _left = _right = false;
 
-        if ((_left || _right || _up || _down) && !rolling)
+        if ((_left || _right || _up || _down) && !blocking)
         {
             if (_left || _right)
             {
@@ -226,17 +228,6 @@ class Player extends Character
             
         
         
-        if (_attack && canAttack)
-        {
-            isAttacking = true;
-            animation.play("punch", true);
-        }
-
-        if (animation.curAnim.name != "idle" && animation.curAnim.finished && animation.curAnim.name != "block")
-        {
-            isAttacking = false;
-            animation.play("idle");
-        }
 
         if (_blocking)
         {
@@ -245,27 +236,29 @@ class Player extends Character
             {
                 velocity.x *= 0;
                 velocity.y *= 0;
+
+                if (animation.curAnim.name != "block")
+                    animation.play("block");
             }
             
-            if (animation.curAnim.name != "block")
-                animation.play("block");
             
             if ((_leftP || _rightP || _upP || _downP) && !rolling)
             {
                 rolling = true;
+                animation.play("roll");
                 
                 if (_leftP || _rightP)
                 {
                     if (_leftP)
                     {
-                        facing = FlxObject.LEFT;
+                        //facing = FlxObject.LEFT;
                         velocity.x = -speed * 2;
                         
                     }
                         
                     if (_rightP)
                     {
-                        facing = FlxObject.RIGHT;
+                        //facing = FlxObject.RIGHT;
                         velocity.x = speed * 2;
                     }
 
@@ -295,6 +288,18 @@ class Player extends Character
         {
             if (velocity.x == 0 && velocity.y == 0)
                 rolling = false;
+        }
+
+        if (_attack && canAttack && !blocking)
+        {
+            isAttacking = true;
+            animation.play("punch", true);
+        }
+
+        if (animation.curAnim.name != "idle" && animation.curAnim.finished && animation.curAnim.name != "block")
+        {
+            isAttacking = false;
+            animation.play("idle");
         }
             
 
