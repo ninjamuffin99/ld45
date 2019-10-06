@@ -116,7 +116,61 @@ class Player extends Character
         var _upP:Bool = FlxG.keys.anyJustPressed(["UP", "W"]);
         var _downP:Bool = FlxG.keys.anyJustPressed(["DOWN", "S"]);
 
+        var _attack:Bool = FlxG.keys.justPressed.SPACE;
+        var _blocking:Bool = FlxG.keys.pressed.SHIFT;
+
         speed = 230;
+
+        var gamepad = FlxG.gamepads.lastActive;
+		if (gamepad != null)
+		{
+			if (gamepad.anyPressed(["LEFT", "DPAD_LEFT", "LEFT_STICK_DIGITAL_LEFT"]))
+			{
+				_left = true;
+			}
+			
+			if (gamepad.anyPressed(["RIGHT", "DPAD_RIGHT","LEFT_STICK_DIGITAL_RIGHT"]))
+			{
+				_right = true;
+			}
+
+            if (gamepad.anyPressed(["UP", "DPAD_UP", "LEFT_STICK_DIGITAL_UP"]))
+			{
+				_up = true;
+			}
+			
+			if (gamepad.anyPressed(["DOWN", "DPAD_DOWN","LEFT_STICK_DIGITAL_DOWN"]))
+			{
+				_down = true;
+			}
+
+            if (gamepad.anyJustPressed(["LEFT", "DPAD_LEFT", "LEFT_STICK_DIGITAL_LEFT"]))
+			{
+				_leftP = true;
+			}
+			
+			if (gamepad.anyJustPressed(["RIGHT", "DPAD_RIGHT","LEFT_STICK_DIGITAL_RIGHT"]))
+			{
+				_rightP = true;
+			}
+
+            if (gamepad.anyJustPressed(["UP", "DPAD_UP", "LEFT_STICK_DIGITAL_UP"]))
+			{
+				_upP = true;
+			}
+			
+			if (gamepad.anyJustPressed(["DOWN", "DPAD_DOWN","LEFT_STICK_DIGITAL_DOWN"]))
+			{
+				_downP = true;
+			}
+
+            if (gamepad.justPressed.X)
+                _attack = true;
+            
+            if (gamepad.pressed.LEFT_SHOULDER || gamepad.pressed.RIGHT_SHOULDER)
+                _blocking = true;
+
+		}
 
         if (_left && _right)
             _left = _right = false;
@@ -162,7 +216,7 @@ class Player extends Character
             
         
         
-        if (FlxG.keys.justPressed.SPACE && canAttack)
+        if (_attack && canAttack)
         {
             isAttacking = true;
             animation.play("punch", true);
@@ -174,7 +228,7 @@ class Player extends Character
             animation.play("idle");
         }
 
-        if (FlxG.keys.pressed.SHIFT)
+        if (_blocking)
         {
             blocking = true;
             if (!rolling)
