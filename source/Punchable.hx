@@ -9,13 +9,14 @@ import flixel.group.FlxGroup;
 import flixel.math.FlxRect;
 import flixel.math.FlxPoint;
 import flixel.effects.FlxFlicker;
+import flixel.util.FlxSort;
 
-class Punchable extends FlxSpriteGroup
+class Punchable extends FlxSprite
 {
-    public var daSprite:FlxSprite;
     public var grpHurtboxes:FlxTypedSpriteGroup<Hitbox>;
     public var grpHitboxes:FlxTypedSpriteGroup<Hitbox>;
     public var curAnimation:Int = 0;
+    public var blocking:Bool = false;
 
     public var actualHealth:Float = 1;
     public var invincibleFrames:Float = 0;
@@ -23,7 +24,7 @@ class Punchable extends FlxSpriteGroup
     public var hurtboxes:Array<Dynamic> = 
     [
         [
-            [-30, -85, 60, 100]
+            [-30, -15, 60, 30]
         ]
     ];
 
@@ -32,26 +33,24 @@ class Punchable extends FlxSpriteGroup
     public var hitboxes:Array<Dynamic> =
     [
         [
-            [30, -50, 20, 20]
+            [30, -5, 20, 20]
         ]
     ];
 
     public function new(X: Float, Y: Float)
     {
         super(X, Y);
-        daSprite = new FlxSprite(0, 85);
-        daSprite.makeGraphic(100, 100);
+        makeGraphic(100, 100);
        
-        daSprite.offset.y = 85;
-         var daOffsetY:Float = daSprite.height - daSprite.offset.y;
-        daSprite.height = daOffsetY;
-        add(daSprite);
+        offset.y = 85;
+        var daOffsetY:Float = height - offset.y;
+        height = daOffsetY;
 
         grpHurtboxes = new FlxTypedSpriteGroup<Hitbox>();
-        add(grpHurtboxes);
+        //add(grpHurtboxes);
 
         grpHitboxes = new FlxTypedSpriteGroup<Hitbox>();
-        add(grpHitboxes);
+        //add(grpHitboxes);
 
         drag.x = 300;
 
@@ -99,26 +98,25 @@ class Punchable extends FlxSpriteGroup
     {
         if (invincibleFrames <= 0)
         {
-            actualHealth -= dmg;
-            if (fromPos != null)
+            if (!blocking)
             {
-                if (fromPos.x < x)
-                    velocity.x = 200 + (fromPos.velocity.x * 1.5);
-                if (fromPos.x > x)
-                    velocity.x = -200 + (fromPos.velocity.x * 1.5); 
-            }
+                actualHealth -= dmg;
+                invincibleFrames = 0.8;
 
-            invincibleFrames = 0.8;
-            trace("OOF OUCH OWIE" + FlxG.random.int(0, 100));
+                if (fromPos != null)
+                {
+                    if (fromPos.x < x)
+                        velocity.x = 200 + (fromPos.velocity.x * 1.5);
+                    if (fromPos.x > x)
+                        velocity.x = -200 + (fromPos.velocity.x * 1.5); 
+                }
+            }
         }
     }
 
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
-
-        
-
 
         if (invincibleFrames > 0)
         {
@@ -131,9 +129,8 @@ class Punchable extends FlxSpriteGroup
 
             //visible = true;
             
-        
         if (actualHealth <= 0)
-            alpha = 0.1;
+            getKilled();
 
         grpHurtboxes.forEach(function(spr:Hitbox)
         {
@@ -150,11 +147,30 @@ class Punchable extends FlxSpriteGroup
 
     }
 
+    private function getKilled():Void
+    {
+        grpHitboxes.kill();
+        grpHurtboxes.kill();
+
+    }
+
     private function setSpritePos(spr:Hitbox):Void
     {
+        /* 
         if (daSprite.facing == FlxObject.RIGHT)
             spr.setPosition(daSprite.getMidpoint().x + (spr.offsetShit.x), daSprite.y + spr.offsetShit.y);
         if (daSprite.facing == FlxObject.LEFT)
             spr.setPosition(daSprite.getMidpoint().x - (spr.offsetShit.x) - spr.width, daSprite.y + spr.offsetShit.y);
+        */
+        if (facing == FlxObject.RIGHT)
+            spr.setPosition(getMidpoint().x + (spr.offsetShit.x), y + spr.offsetShit.y);
+        if (facing == FlxObject.LEFT)
+            spr.setPosition(getMidpoint().x - (spr.offsetShit.x) - spr.width, y + spr.offsetShit.y);
     }
+
+    public static inline function bySprite(Order:Int, Obj1:Punchable, Obj2:Punchable):Int
+	{
+		// return FlxSort.byValues(Order, Obj1.daSprite.y, Obj2.daSprite.y);
+        return FlxSort.byValues(Order, Obj1.y, Obj2.y);
+	}
 }
