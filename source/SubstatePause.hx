@@ -10,9 +10,10 @@ class SubstatePause extends FlxSubState
     public function new():Void
     {
         super();
+
         var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
         bg.scrollFactor.set();
-        bg.alpha = 0.5;
+        bg.alpha = 0.4;
         add(bg);
     }
 

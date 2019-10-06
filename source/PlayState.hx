@@ -23,7 +23,8 @@ class PlayState extends FlxState
 
 		FlxG.watch.addMouse();	
 
-		persistentDraw = persistentUpdate = false;
+		persistentUpdate = false;
+		persistentDraw = true;
 
 		ground = new FlxSprite(0, FlxG.height - 10).makeGraphic(FlxG.width * 3, 10);
 		ground.immovable = true;
