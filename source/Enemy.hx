@@ -4,21 +4,27 @@ import flixel.math.FlxPoint;
 import flixel.FlxG;
 import flixel.math.FlxVelocity;
 import flixel.FlxObject;
+import flixel.math.FlxMath;
+import flixel.math.FlxAngle;
 
 class Enemy extends Character
 {
     private var _brain:FSM;
     private var _idleTmr:Float;
     private var _moveDir:Float;
-    public var seesPlayer:Bool = false;
-    public var playerPos(default, null):FlxPoint;
+
     private var attackTmr:Float = 0;
+    private var attackWindup:Float = 1;
     private var _player:Player;
 
     public function new(X:Float, Y:Float, p:Player)
     {
         super(X, Y);
         generateHitboxes();
+
+        CHAR_TYPE = Character.ENEMY;
+        offset.y -= 20;
+        height += 20;
 
         _brain = new FSM(idle);
         _idleTmr = 0;
@@ -62,7 +68,13 @@ class Enemy extends Character
         }
         else if (invincibleFrames <= 0)
         {
-            FlxVelocity.moveTowardsPoint(this, playerPos, Std.int(speed));
+            var rads:Float = Math.atan2(_player.getMidpoint().y - getMidpoint().y, _player.getMidpoint().x - getMidpoint().x);
+		    var degs = FlxAngle.asDegrees(rads);
+
+            velocity.set(speed, 0);
+            velocity.rotate(FlxPoint.weak(0, 0), degs);
+
+            //FlxVelocity.moveTowardsPoint(this, playerPos, Std.int(speed));
         }
         
         if (isAttacking)
@@ -73,14 +85,20 @@ class Enemy extends Character
     {
         attackTmr += FlxG.elapsed;
 
-        if (attackTmr >= 1)
+        if (attackTmr >= attackWindup)
         {
             _player.getHurt(0.25, this);
             attackTmr = 0;
         }
             
-        if (!isAttacking)
+        if (!isAttacking || _player.isDead)
             _brain.activeState = idle;
+    }
+
+    override private function getKilled():Void
+    {
+        super.getKilled();
+        kill();
     }
 
     override public function update(elapsed:Float):Void

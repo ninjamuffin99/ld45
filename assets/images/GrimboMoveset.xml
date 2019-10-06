@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="GrimboMoveset.png">
+	<!-- Created with Adobe Animate version 19.2.0.405 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="GrimboAttack0000" x="0" y="0" width="305" height="310" frameX="-273" frameY="0" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0001" x="0" y="0" width="305" height="310" frameX="-273" frameY="0" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0002" x="0" y="0" width="305" height="310" frameX="-273" frameY="0" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0003" x="0" y="0" width="305" height="310" frameX="-273" frameY="0" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0004" x="0" y="0" width="305" height="310" frameX="-273" frameY="0" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0005" x="0" y="0" width="305" height="310" frameX="-273" frameY="0" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0006" x="305" y="0" width="525" height="307" frameX="-9" frameY="-6" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0007" x="305" y="0" width="525" height="307" frameX="-9" frameY="-6" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0008" x="0" y="310" width="534" height="307" frameX="0" frameY="-6" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0009" x="0" y="310" width="534" height="307" frameX="0" frameY="-6" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0010" x="0" y="310" width="534" height="307" frameX="0" frameY="-6" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0011" x="0" y="617" width="494" height="301" frameX="-40" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0012" x="0" y="617" width="494" height="301" frameX="-40" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0013" x="0" y="617" width="494" height="301" frameX="-40" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0014" x="0" y="617" width="494" height="301" frameX="-40" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0015" x="494" y="617" width="447" height="301" frameX="-87" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0016" x="0" y="918" width="283" height="301" frameX="-251" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0017" x="0" y="918" width="283" height="301" frameX="-251" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0018" x="0" y="918" width="283" height="301" frameX="-251" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0019" x="283" y="918" width="283" height="301" frameX="-251" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0020" x="283" y="918" width="283" height="301" frameX="-251" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0021" x="283" y="918" width="283" height="301" frameX="-251" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0022" x="283" y="918" width="283" height="301" frameX="-251" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboAttack0023" x="283" y="918" width="283" height="301" frameX="-251" frameY="-10" frameWidth="578" frameHeight="313"/>
+	<SubTexture name="GrimboIdle0000" x="566" y="918" width="316" height="322" frameX="0" frameY="0" frameWidth="329" frameHeight="322"/>
+	<SubTexture name="GrimboIdle0001" x="566" y="918" width="316" height="322" frameX="0" frameY="0" frameWidth="329" frameHeight="322"/>
+	<SubTexture name="GrimboIdle0002" x="566" y="918" width="316" height="322" frameX="0" frameY="0" frameWidth="329" frameHeight="322"/>
+	<SubTexture name="GrimboIdle0003" x="566" y="918" width="316" height="322" frameX="0" frameY="0" frameWidth="329" frameHeight="322"/>
+	<SubTexture name="GrimboIdle0004" x="0" y="1240" width="329" height="319" frameX="0" frameY="-2" frameWidth="329" frameHeight="322"/>
+	<SubTexture name="GrimboIdle0005" x="0" y="1240" width="329" height="319" frameX="0" frameY="-2" frameWidth="329" frameHeight="322"/>
+	<SubTexture name="GrimboIdle0006" x="0" y="1240" width="329" height="319" frameX="0" frameY="-2" frameWidth="329" frameHeight="322"/>
+	<SubTexture name="GrimboIdle0007" x="0" y="1240" width="329" height="319" frameX="0" frameY="-2" frameWidth="329" frameHeight="322"/>
+	<SubTexture name="GrimboWalk0000" x="329" y="1240" width="321" height="325"/>
+	<SubTexture name="GrimboWalk0001" x="329" y="1240" width="321" height="325"/>
+	<SubTexture name="GrimboWalk0002" x="329" y="1240" width="321" height="325"/>
+	<SubTexture name="GrimboWalk0003" x="650" y="1240" width="316" height="307" frameX="0" frameY="-18" frameWidth="321" frameHeight="325"/>
+	<SubTexture name="GrimboWalk0004" x="650" y="1240" width="316" height="307" frameX="0" frameY="-18" frameWidth="321" frameHeight="325"/>
+	<SubTexture name="GrimboWalk0005" x="650" y="1240" width="316" height="307" frameX="0" frameY="-18" frameWidth="321" frameHeight="325"/>
+</TextureAtlas>

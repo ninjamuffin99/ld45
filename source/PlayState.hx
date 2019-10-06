@@ -5,13 +5,15 @@ import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
+import flixel.util.FlxSort;
+import flixel.math.FlxVector;
 
 class PlayState extends FlxState
 {
 	private var ground:FlxSprite;
 	private var ground2:FlxSprite;
 	private var _player:Player;
-	private var grpEnemies:FlxTypedGroup<Enemy>;
+	private var grpCharacters:FlxTypedGroup<Character>;
 
 	override public function create():Void
 	{
@@ -35,14 +37,23 @@ class PlayState extends FlxState
 		var bg4:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.beta_bg4__png);
 		add(bg4);
 
-		grpEnemies = new FlxTypedGroup<Enemy>();
-		add(grpEnemies);
+		grpCharacters = new FlxTypedGroup<Character>();
+		add(grpCharacters);
 
 		_player = new Player(100, 400);
-		add(_player);
+		grpCharacters.add(_player);
+		add(_player.grpHitboxes);
+		add(_player.grpHurtboxes);
 
 		var e:Enemy = new Enemy(_player.x + 300, _player.y, _player);
-		grpEnemies.add(e);
+		//grpCharacters.add(e);
+		add(e.grpHitboxes);
+		add(e.grpHurtboxes);
+
+		var g:Grimbo = new Grimbo(e.x + 100, e.y - 100, _player);
+		grpCharacters.add(g);
+		add(g.grpHitboxes);
+		add(g.grpHurtboxes);
 
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
 
@@ -53,51 +64,45 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		grpEnemies.forEach(function(e:Enemy)
+		grpCharacters.forEach(function(c:Character)
 		{
-			var distanceToPlayer:Float = FlxMath.distanceToPoint(e.daSprite, _player.daSprite.getMidpoint());
-			if (distanceToPlayer < 300 && distanceToPlayer > 40)
+			
+			if (c.CHAR_TYPE == Character.ENEMY)
 			{
-				e.seesPlayer = true;
-				e.playerPos.copyFrom(_player.daSprite.getPosition());
-			}
-			else
-				e.seesPlayer = false;
+				var dx:Float = c.getMidpoint().x - _player.getMidpoint().x;
+				var dy:Float = c.getMidpoint().y - _player.getMidpoint().y;
+				var distanceToPlayer:Int = Std.int(FlxMath.vectorLength(dx, dy));
 
-			/*
-				_player.grpHurtboxes.forEach(function(pHit:Hitbox)
+				FlxG.watch.addQuick("Dist to player", distanceToPlayer);
+
+				if (distanceToPlayer < 300 && !_player.isDead)
 				{
-					e.grpHurtboxes.forEach(function(eHurt:Hitbox)
-					{
-						if (FlxG.overlap(pHit, eHurt))
-						{
-							e.getHurt(0.1);
-						}
-					});
-				});
-			*/
+					c.seesPlayer = true;
+					c.playerPos.copyFrom(_player.getPosition());
+				}
+				else
+					c.seesPlayer = false;
 
-			if (FlxG.overlap(e.grpHurtboxes, _player.grpHitboxes) && _player.isAttacking)
-			{
-				trace("HURTING???");
-				e.getHurt(0.5, _player);
-			}
+				if (FlxG.overlap(c.grpHurtboxes, _player.grpHitboxes) && _player.isAttacking)
+				{
+					c.getHurt(0.5, _player);
+				}
 
-			if (FlxG.overlap(_player.grpHurtboxes, e.grpHitboxes) && _player.invincibleFrames <= 0)
-			{
-				trace("GETTING HURT???");
-				e.isAttacking = true;
-					
+				if (FlxG.overlap(_player.grpHurtboxes, c.grpHitboxes) && _player.invincibleFrames <= 0)
+				{
+					c.isAttacking = true;
+						
+				}
+				else
+					c.isAttacking = false;
+
 			}
-			else
-				e.isAttacking = false;
 		});
 
-		FlxG.collide(ground, _player);
-		FlxG.collide(ground2, _player);
+		grpCharacters.sort(Punchable.bySprite, FlxSort.ASCENDING);
 
-		FlxG.collide(ground, grpEnemies);
-		FlxG.collide(ground2, grpEnemies);
+		FlxG.collide(ground, grpCharacters);
+		FlxG.collide(ground2, grpCharacters);
 	
 	}
 }
