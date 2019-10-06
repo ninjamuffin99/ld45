@@ -9,6 +9,7 @@ import flixel.group.FlxGroup;
 import flixel.math.FlxRect;
 import flixel.math.FlxPoint;
 import flixel.effects.FlxFlicker;
+import flixel.util.FlxSort;
 
 class Punchable extends FlxSpriteGroup
 {
@@ -23,7 +24,7 @@ class Punchable extends FlxSpriteGroup
     public var hurtboxes:Array<Dynamic> = 
     [
         [
-            [-30, -85, 60, 100]
+            [-30, -15, 60, 30]
         ]
     ];
 
@@ -32,7 +33,7 @@ class Punchable extends FlxSpriteGroup
     public var hitboxes:Array<Dynamic> =
     [
         [
-            [30, -50, 20, 20]
+            [30, -5, 20, 20]
         ]
     ];
 
@@ -157,4 +158,9 @@ class Punchable extends FlxSpriteGroup
         if (daSprite.facing == FlxObject.LEFT)
             spr.setPosition(daSprite.getMidpoint().x - (spr.offsetShit.x) - spr.width, daSprite.y + spr.offsetShit.y);
     }
+
+    public static inline function bySprite(Order:Int, Obj1:Punchable, Obj2:Punchable):Int
+	{
+		return FlxSort.byValues(Order, Obj1.daSprite.y, Obj2.daSprite.y);
+	}
 }

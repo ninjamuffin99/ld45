@@ -14,6 +14,9 @@ class Player extends Character
     public function new(X:Float, Y:Float)
     {
         super(X, Y);
+
+        CHAR_TYPE = TypePLAYER;
+
         speed = 230;
 
         daSprite.color = FlxColor.WHITE;
@@ -22,7 +25,7 @@ class Player extends Character
         daSprite.setGraphicSize(0, 100);
         daSprite.updateHitbox();
         daSprite.antialiasing = true;
-        daSprite.offset.y = 185;
+        daSprite.offset.y = 165;
          var daOffsetY:Float = daSprite.height - daSprite.offset.y;
         daSprite.height = 15;
         generateHitboxes();
@@ -46,6 +49,9 @@ class Player extends Character
             spr.color = FlxColor.RED;
         });
 
+        // grpHitboxes.visible = false;
+        // grpHurtboxes.visible = false;
+
         facing = FlxObject.RIGHT;
         drag.x = 700;
         drag.y = 700;
@@ -57,6 +63,16 @@ class Player extends Character
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
+
+        FlxG.watch.addQuick("FullPos", getPosition());
+        FlxG.watch.addQuick("SpritePos", daSprite.getPosition());
+        
+        /* 
+        if (getPosition().x != daSprite.getPosition().x)
+            setPosition(daSprite.getPosition().x, getPosition().y);
+        if (getPosition().y != daSprite.getPosition().y)
+            y = daSprite.y - 85;
+        */ 
 
         movement();
 

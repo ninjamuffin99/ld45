@@ -10,8 +10,7 @@ class Enemy extends Character
     private var _brain:FSM;
     private var _idleTmr:Float;
     private var _moveDir:Float;
-    public var seesPlayer:Bool = false;
-    public var playerPos(default, null):FlxPoint;
+
     private var attackTmr:Float = 0;
     private var _player:Player;
 
@@ -19,6 +18,8 @@ class Enemy extends Character
     {
         super(X, Y);
         generateHitboxes();
+
+        CHAR_TYPE = TypeENEMY;
 
         _brain = new FSM(idle);
         _idleTmr = 0;

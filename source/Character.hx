@@ -1,5 +1,6 @@
 package;
 import flixel.FlxG;
+import flixel.math.FlxPoint;
 
 class Character extends Punchable
 {
@@ -7,6 +8,12 @@ class Character extends Punchable
     public var isAttacking:Bool = false;
     public var attackCooldown:Float = 0;
     public var canAttack:Bool = true;
+
+    public var CHAR_TYPE:Int = 0;
+    public var TypeENEMY:Int = 10;
+    public var TypePLAYER:Int = 1;
+    public var seesPlayer:Bool = false;
+    public var playerPos(default, null):FlxPoint;
 
     public function new(X:Float, Y:Float)
     {
