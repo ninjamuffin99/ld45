@@ -28,6 +28,7 @@ class Player extends Character
         offset.y = 165;
         var daOffsetY:Float = height - offset.y;
         height = 15;
+        hitboxes[0][0] = [30, -5, 40, 20];
         generateHitboxes();
 
         animation.addByPrefix("idle", "HoboIdle", 24, true);
@@ -168,7 +169,15 @@ class Player extends Character
 			}
 
             if (gamepad.justPressed.X)
+            {
                 _attack = true;
+            }
+
+            if (gamepad.justPressed.Y)
+            {
+                trace(gamepad.model);
+            }
+                
             
             if (gamepad.pressed.LEFT_SHOULDER || gamepad.pressed.RIGHT_SHOULDER || gamepad.pressed.LEFT_TRIGGER || gamepad.pressed.RIGHT_TRIGGER)
                 _blocking = true;
