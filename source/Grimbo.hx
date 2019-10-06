@@ -17,7 +17,8 @@ class Grimbo extends Enemy
         updateHitbox();
         antialiasing = true;
         offset.y += 90;
-        width -= 80;
+        width -= 150;
+        offset.x += 35;
         height = 15;
 
         hitboxes[0][0] = [-30, -15, 165, 10];

@@ -27,7 +27,9 @@ class Player extends Character
         antialiasing = true;
         offset.y = 165;
         var daOffsetY:Float = height - offset.y;
-        height = 15;
+        height = 5;
+        width -= 50;
+        offset.x += 15;
         hitboxes[0][0] = [30, -5, 40, 20];
         generateHitboxes();
 

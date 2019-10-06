@@ -23,27 +23,60 @@ class PlayState extends FlxState
 
 		FlxG.watch.addMouse();	
 
-		ground = new FlxSprite(0, FlxG.height - 10).makeGraphic(FlxG.width, 10);
+		ground = new FlxSprite(0, FlxG.height - 10).makeGraphic(FlxG.width * 3, 10);
 		ground.immovable = true;
 		add(ground);
 
-		ground2 = new FlxSprite(0, FlxG.height - 260).makeGraphic(FlxG.width, 10);
+		ground2 = new FlxSprite(0, FlxG.height - 260).makeGraphic(FlxG.width * 3, 10);
 		ground2.immovable = true;
 		add(ground2);
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_1__png);
-		bg.setGraphicSize(FlxG.width, FlxG.height);
+		bg.setGraphicSize(0, FlxG.height);
 		bg.updateHitbox();
+		bg.scrollFactor.set();
 		add(bg);
+
+		var clouds:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_2__png);
+		clouds.setGraphicSize(0, FlxG.height);
+		clouds.updateHitbox();
+		clouds.scrollFactor.set(0.25, 0.25);
+		add(clouds);
+
+		var mountain:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_3__png);
+		mountain.setGraphicSize(0, FlxG.height);
+		mountain.updateHitbox();
+		mountain.scrollFactor.set(0.4, 0.4);
+		add(mountain);
+
+		var mountain2:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_4__png);
+		mountain2.setGraphicSize(0, FlxG.height);
+		mountain2.updateHitbox();
+		mountain2.scrollFactor.set(0.55, 0.55);
+		add(mountain2);
+
+		var mountain3:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_5__png);
+		mountain3.setGraphicSize(0, FlxG.height);
+		mountain3.updateHitbox();
+		mountain3.scrollFactor.set(0.7, 0.7);
+		add(mountain3);
+
 
 		var bg4:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_6__png);
 		add(bg4);
+
+		var fg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_7__png);
+		fg.scrollFactor.set(2, 2);
+		//gets added after the player
+		
 
 		grpItems = new FlxTypedGroup<Item>();
 		add(grpItems);
 
 		grpCharacters = new FlxTypedGroup<Character>();
 		add(grpCharacters);
+
+		add(fg);
 
 		_player = new Player(100, 400);
 		grpCharacters.add(_player);
@@ -60,10 +93,13 @@ class PlayState extends FlxState
 		add(g.grpHitboxes);
 		add(g.grpHurtboxes);
 
-		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
+		FlxG.camera.follow(_player);
+		FlxG.camera.setScrollBoundsRect(0, 0, bg4.width, bg4.height);
+
+		FlxG.worldBounds.set(0, 0, FlxG.width * 3, FlxG.height);
 
 		var daHealth:Healthbar = new Healthbar(10, 10, _player);
-		var phealth = FlxAtlasFrames.fromSparrow(AssetPaths.hoboHealth__png, AssetPaths.hoboHealth__xml);
+		var phealth = FlxAtlasFrames.fromSparrow(AssetPaths.HealthBears__png, AssetPaths.HealthBears__xml);
 		daHealth.frames = phealth;
 		daHealth.setGraphicSize(Std.int(daHealth.width * 0.5));
 		daHealth.updateHitbox();
