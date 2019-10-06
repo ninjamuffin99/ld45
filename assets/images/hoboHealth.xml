@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="hoboHealth.png">
+	<!-- Created with Adobe Animate version 19.2.0.405 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Healthbar0000" x="0" y="0" width="447" height="133"/>
+	<SubTexture name="Healthbar0001" x="0" y="133" width="447" height="133"/>
+	<SubTexture name="Healthbar0002" x="0" y="266" width="447" height="133"/>
+	<SubTexture name="Healthbar0003" x="0" y="399" width="447" height="133"/>
+	<SubTexture name="Healthbar0004" x="0" y="532" width="447" height="133"/>
+</TextureAtlas>

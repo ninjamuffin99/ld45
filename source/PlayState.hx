@@ -7,6 +7,7 @@ import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.util.FlxSort;
 import flixel.math.FlxVector;
+import flixel.graphics.frames.FlxAtlasFrames;
 
 class PlayState extends FlxState
 {
@@ -60,6 +61,16 @@ class PlayState extends FlxState
 		add(g.grpHurtboxes);
 
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
+
+		var daHealth:Healthbar = new Healthbar(10, 10, _player);
+		var phealth = FlxAtlasFrames.fromSparrow(AssetPaths.hoboHealth__png, AssetPaths.hoboHealth__xml);
+		daHealth.frames = phealth;
+		daHealth.setGraphicSize(Std.int(daHealth.width * 0.5));
+		daHealth.updateHitbox();
+		daHealth.antialiasing = true;
+		daHealth.animation.add("health", [4, 3, 2, 1, 0], 0);
+        daHealth.animation.play("health");
+		add(daHealth);
 
 		super.create();
 	}
