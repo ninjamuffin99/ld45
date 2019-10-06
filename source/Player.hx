@@ -9,6 +9,7 @@ import flixel.math.FlxPoint;
 
 class Player extends Character
 {
+    public var rolling:Bool = false;
 
     public function new(X:Float, Y:Float)
     {
@@ -110,12 +111,17 @@ class Player extends Character
         var _up:Bool = FlxG.keys.anyPressed(["UP", "W"]);
         var _down:Bool = FlxG.keys.anyPressed(["DOWN", "S"]);
 
+        var _leftP:Bool = FlxG.keys.anyJustPressed(["LEFT", "A"]);
+        var _rightP:Bool = FlxG.keys.anyJustPressed(["RIGHT", "D"]);
+        var _upP:Bool = FlxG.keys.anyJustPressed(["UP", "W"]);
+        var _downP:Bool = FlxG.keys.anyJustPressed(["DOWN", "S"]);
+
         speed = 230;
 
         if (_left && _right)
             _left = _right = false;
 
-        if (_left || _right || _up || _down)
+        if ((_left || _right || _up || _down) && !rolling)
         {
             if (_left || _right)
             {
@@ -171,16 +177,60 @@ class Player extends Character
         if (FlxG.keys.pressed.SHIFT)
         {
             blocking = true;
-            velocity.x *= 0;
-            velocity.y *= 0;
+            if (!rolling)
+            {
+                velocity.x *= 0;
+                velocity.y *= 0;
+            }
+            
             if (animation.curAnim.name != "block")
                 animation.play("block");
+            
+            if ((_leftP || _rightP || _upP || _downP) && !rolling)
+            {
+                rolling = true;
+                
+                if (_leftP || _rightP)
+                {
+                    if (_leftP)
+                    {
+                        facing = FlxObject.LEFT;
+                        velocity.x = -speed * 2;
+                        
+                    }
+                        
+                    if (_rightP)
+                    {
+                        facing = FlxObject.RIGHT;
+                        velocity.x = speed * 2;
+                    }
+
+                    
+                }
+
+                if (_upP || _downP)
+                {
+                    if (_upP)
+                        velocity.y = -speed * 1.7;
+                    if (_downP)
+                        velocity.y = speed * 1.7;
+                    
+                    
+                }
+
+            }
         }
         else
         {
             if (animation.curAnim.name == "block")
                 animation.play("idle");
             blocking = false;
+        }
+
+        if (rolling)
+        {
+            if (velocity.x == 0 && velocity.y == 0)
+                rolling = false;
         }
             
 
