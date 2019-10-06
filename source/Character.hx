@@ -15,6 +15,8 @@ class Character extends Punchable
     public var seesPlayer:Bool = false;
     public var playerPos(default, null):FlxPoint;
 
+    public var isDead:Bool = false;
+
     public function new(X:Float, Y:Float)
     {
         super(X, Y);

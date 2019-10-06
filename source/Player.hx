@@ -34,6 +34,7 @@ class Player extends Character
         daSprite.animation.addByPrefix("punch", "HoboPunch", 24, false);
         daSprite.animation.addByPrefix("walk", "HoboWalk", 24, true);
         daSprite.animation.addByPrefix("hurt", "HoboHurt", 20, false);
+        daSprite.animation.addByPrefix("killed", "HoboDeath", 24, false);
         daSprite.animation.play("idle");
 
         daSprite.setFacingFlip(FlxObject.LEFT, true, false);
@@ -60,6 +61,8 @@ class Player extends Character
         trace(ogOffset);
     }
 
+    private var resetTimer:Float = 0;
+
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
@@ -74,7 +77,18 @@ class Player extends Character
             y = daSprite.y - 85;
         */ 
 
-        movement();
+        if (!isDead)
+        {
+            movement();
+        }
+        else
+        {
+            resetTimer += FlxG.elapsed;
+
+            if (resetTimer >= 3)
+                FlxG.resetState();
+        }
+        
 
         FlxG.watch.addQuick("curANime", daSprite.animation.curAnim.name);
         FlxG.watch.addQuick("offset", daSprite.offset);
@@ -163,6 +177,16 @@ class Player extends Character
             velocity.y *= 0.2;
         }
 
+    }
+
+    override private function getKilled():Void
+    {
+        if (daSprite.animation.curAnim.name != "killed")
+            daSprite.animation.play("killed");
+        
+        isDead = true;
+
+        super.getKilled();
     }
 
     private function animationFixins():Void

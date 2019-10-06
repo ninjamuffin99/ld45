@@ -20,6 +20,8 @@ class Enemy extends Character
         generateHitboxes();
 
         CHAR_TYPE = TypeENEMY;
+        daSprite.offset.y -= 20;
+        daSprite.height += 20;
 
         _brain = new FSM(idle);
         _idleTmr = 0;
@@ -80,8 +82,14 @@ class Enemy extends Character
             attackTmr = 0;
         }
             
-        if (!isAttacking)
+        if (!isAttacking || _player.isDead)
             _brain.activeState = idle;
+    }
+
+    override private function getKilled():Void
+    {
+        super.getKilled();
+        kill();
     }
 
     override public function update(elapsed:Float):Void

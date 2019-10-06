@@ -60,7 +60,7 @@ class PlayState extends FlxState
 			if (c.CHAR_TYPE == c.TypeENEMY)
 			{
 				var distanceToPlayer:Float = FlxMath.distanceToPoint(c.daSprite, _player.daSprite.getMidpoint());
-				if (distanceToPlayer < 300 && distanceToPlayer > 40)
+				if (distanceToPlayer < 300 && distanceToPlayer > 70 && !_player.isDead)
 				{
 					c.seesPlayer = true;
 					c.playerPos.copyFrom(_player.daSprite.getPosition());

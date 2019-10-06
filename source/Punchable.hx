@@ -132,9 +132,8 @@ class Punchable extends FlxSpriteGroup
 
             //visible = true;
             
-        
         if (actualHealth <= 0)
-            alpha = 0.1;
+            getKilled();
 
         grpHurtboxes.forEach(function(spr:Hitbox)
         {
@@ -148,6 +147,11 @@ class Punchable extends FlxSpriteGroup
         });
 
         // testObj.setPosition(daSprite.x + hurtboxes[0][0][0], daSprite.y + hurtboxes[0][0][1]);
+
+    }
+
+    private function getKilled():Void
+    {
 
     }
 
