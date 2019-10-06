@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.math.FlxVelocity;
 import flixel.FlxObject;
 import flixel.math.FlxMath;
+import flixel.FlxSprite;
 import flixel.math.FlxAngle;
 
 class Enemy extends Character
@@ -102,6 +103,15 @@ class Enemy extends Character
             
         if (!isAttacking || _player.isDead)
             _brain.activeState = idle;
+    }
+
+    override public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void
+    {
+        super.getHurt(dmg, fromPos);
+        attackCooldown = 3;
+        justAttacked = false;
+        attackTmr = 0;
+        isAttacking = false;
     }
 
     override private function getKilled():Void

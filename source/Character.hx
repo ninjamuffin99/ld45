@@ -9,6 +9,7 @@ class Character extends Punchable
     public var justAttacked:Bool = false;
     public var attackOverlapping:Bool = false;
     public var successfulAttack:Bool = false;
+    public var actualCooldownLol:Float = 0.3;
     public var attackCooldown:Float = 0;
     public var canAttack:Bool = true;
 
@@ -39,7 +40,7 @@ class Character extends Punchable
 
         if (justAttacked)
         {
-            attackCooldown = 0.3;
+            attackCooldown = actualCooldownLol;
         }
 
         FlxG.watch.addQuick("Attack cooldown", attackCooldown);

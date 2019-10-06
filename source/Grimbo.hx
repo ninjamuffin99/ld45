@@ -27,7 +27,8 @@ class Grimbo extends Enemy
         animation.addByPrefix("idle", "GrimboIdle", 24);
         animation.addByPrefix("walk", "GrimboWalk", 24);
         animation.addByPrefix("attack", "GrimboAttack", 24, false);
-        attackWindup = 0.5;
+        attackWindup = 0.4;
+        actualCooldownLol = 0.9;
         animation.play("idle");
 
         setFacingFlip(FlxObject.LEFT, false, false);
