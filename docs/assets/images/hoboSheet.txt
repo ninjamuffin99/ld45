@@ -1,0 +1,2 @@
+boho placehold1 = 0 0 100 100
+boho placehold2 = 101 0 100 100
