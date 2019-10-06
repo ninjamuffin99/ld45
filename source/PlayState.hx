@@ -23,6 +23,8 @@ class PlayState extends FlxState
 
 		FlxG.watch.addMouse();	
 
+		persistentDraw = persistentUpdate = false;
+
 		ground = new FlxSprite(0, FlxG.height - 10).makeGraphic(FlxG.width * 3, 10);
 		ground.immovable = true;
 		add(ground);
@@ -66,7 +68,7 @@ class PlayState extends FlxState
 		add(bg4);
 
 		var fg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_7__png);
-		fg.scrollFactor.set(2, 2);
+		fg.scrollFactor.set(2.2, 2.2);
 		//gets added after the player
 		
 
@@ -94,7 +96,8 @@ class PlayState extends FlxState
 		add(g.grpHurtboxes);
 
 		FlxG.camera.follow(_player);
-		FlxG.camera.setScrollBoundsRect(0, 0, bg4.width, bg4.height);
+		var camYOffset:Float = 50;
+		FlxG.camera.setScrollBoundsRect(0, -camYOffset, bg4.width, bg4.height + camYOffset);
 
 		FlxG.worldBounds.set(0, 0, FlxG.width * 3, FlxG.height);
 
@@ -116,6 +119,16 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+		var gamepad = FlxG.gamepads.lastActive;
+		if (gamepad != null)
+		{
+			if (gamepad.justPressed.START)
+				openSubState(new SubstatePause());
+		}
+
+		if (FlxG.keys.justPressed.ENTER)
+			openSubState(new SubstatePause());
 
 		if (grpCharacters.length == 1)
 		{
