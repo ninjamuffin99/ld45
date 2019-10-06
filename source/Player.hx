@@ -34,6 +34,7 @@ class Player extends Character
         animation.addByPrefix("walk", "HoboWalk", 24, true);
         animation.addByPrefix("hurt", "HoboHurt", 20, false);
         animation.addByPrefix("killed", "HoboDeath", 24, false);
+        animation.addByPrefix("block", "HoboBlock", 24, false);
         animation.play("idle");
 
         setFacingFlip(FlxObject.LEFT, true, false);
@@ -98,7 +99,8 @@ class Player extends Character
     {
         super.getHurt(dmg, fromPos);
 
-        animation.play("hurt", true);
+        if (!blocking)
+            animation.play("hurt", true);
     }
 
     private function movement():Void
@@ -112,9 +114,6 @@ class Player extends Character
 
         if (_left && _right)
             _left = _right = false;
-
-        if (FlxG.keys.pressed.SHIFT)
-            speed *= 1.6;
 
         if (_left || _right || _up || _down)
         {
@@ -163,11 +162,27 @@ class Player extends Character
             animation.play("punch", true);
         }
 
-        if (animation.curAnim.name != "idle" && animation.curAnim.finished)
+        if (animation.curAnim.name != "idle" && animation.curAnim.finished && animation.curAnim.name != "block")
         {
             isAttacking = false;
             animation.play("idle");
         }
+
+        if (FlxG.keys.pressed.SHIFT)
+        {
+            blocking = true;
+            velocity.x *= 0;
+            velocity.y *= 0;
+            if (animation.curAnim.name != "block")
+                animation.play("block");
+        }
+        else
+        {
+            if (animation.curAnim.name == "block")
+                animation.play("idle");
+            blocking = false;
+        }
+            
 
         if (animation.curAnim.name == "punch")
         {

@@ -16,6 +16,7 @@ class Punchable extends FlxSprite
     public var grpHurtboxes:FlxTypedSpriteGroup<Hitbox>;
     public var grpHitboxes:FlxTypedSpriteGroup<Hitbox>;
     public var curAnimation:Int = 0;
+    public var blocking:Bool = false;
 
     public var actualHealth:Float = 1;
     public var invincibleFrames:Float = 0;
@@ -97,26 +98,25 @@ class Punchable extends FlxSprite
     {
         if (invincibleFrames <= 0)
         {
-            actualHealth -= dmg;
-            if (fromPos != null)
+            if (!blocking)
             {
-                if (fromPos.x < x)
-                    velocity.x = 200 + (fromPos.velocity.x * 1.5);
-                if (fromPos.x > x)
-                    velocity.x = -200 + (fromPos.velocity.x * 1.5); 
-            }
+                actualHealth -= dmg;
+                invincibleFrames = 0.8;
 
-            invincibleFrames = 0.8;
-            trace("OOF OUCH OWIE" + FlxG.random.int(0, 100));
+                if (fromPos != null)
+                {
+                    if (fromPos.x < x)
+                        velocity.x = 200 + (fromPos.velocity.x * 1.5);
+                    if (fromPos.x > x)
+                        velocity.x = -200 + (fromPos.velocity.x * 1.5); 
+                }
+            }
         }
     }
 
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
-
-        
-
 
         if (invincibleFrames > 0)
         {
