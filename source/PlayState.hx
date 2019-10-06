@@ -60,15 +60,30 @@ class PlayState extends FlxState
 		super.create();
 	}
 
+
+
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+		if (grpCharacters.length == 1)
+		{
+			for (i in 0...FlxG.random.int(2, 6))
+			{
+				var grim:Grimbo = new Grimbo(FlxG.random.float(40, FlxG.width - 120), FlxG.random.float(FlxG.height - 220, FlxG.height - 130), _player);
+				grpCharacters.add(grim);
+				add(grim.grpHitboxes);
+				add(grim.grpHurtboxes);
+			}
+		}
 
 		grpCharacters.forEach(function(c:Character)
 		{
 			
 			if (c.CHAR_TYPE == Character.ENEMY)
 			{
+				
+
 				var dx:Float = c.getMidpoint().x - _player.getMidpoint().x;
 				var dy:Float = c.getMidpoint().y - _player.getMidpoint().y;
 				var distanceToPlayer:Int = Std.int(FlxMath.vectorLength(dx, dy));
@@ -95,6 +110,9 @@ class PlayState extends FlxState
 				}
 				else
 					c.isAttacking = false;
+				
+				if (!c.alive)
+					grpCharacters.remove(c, true);
 
 			}
 		});
