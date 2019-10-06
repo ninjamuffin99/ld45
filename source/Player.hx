@@ -124,6 +124,7 @@ class Player extends Character
         var gamepad = FlxG.gamepads.lastActive;
 		if (gamepad != null)
 		{
+            FlxG.watch.addQuick("AnalogSHit", gamepad.analog.value.LEFT_STICK_X);
 			if (gamepad.anyPressed(["LEFT", "DPAD_LEFT", "LEFT_STICK_DIGITAL_LEFT"]))
 			{
 				_left = true;
@@ -167,7 +168,7 @@ class Player extends Character
             if (gamepad.justPressed.X)
                 _attack = true;
             
-            if (gamepad.pressed.LEFT_SHOULDER || gamepad.pressed.RIGHT_SHOULDER)
+            if (gamepad.pressed.LEFT_SHOULDER || gamepad.pressed.RIGHT_SHOULDER || gamepad.pressed.LEFT_TRIGGER || gamepad.pressed.RIGHT_TRIGGER)
                 _blocking = true;
 
 		}
@@ -203,6 +204,15 @@ class Player extends Character
                     velocity.y = speed;
                 
                 
+            }
+
+            var gamepad = FlxG.gamepads.lastActive;
+            if (gamepad != null)
+            {
+                if (gamepad.analog.value.LEFT_STICK_X != 0)
+                    velocity.x = speed * gamepad.analog.value.LEFT_STICK_X;
+                if (gamepad.analog.value.LEFT_STICK_Y != 0)
+                velocity.y = speed * gamepad.analog.value.LEFT_STICK_Y;
             }
 
             if (animation.curAnim.name == "idle")
