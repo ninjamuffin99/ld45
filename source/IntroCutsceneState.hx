@@ -36,6 +36,12 @@ class IntroCutsceneState extends FlxState
     private var bar4:FlxSprite;
     private var barText4:FlxSprite;
 
+    //SLIDE 5
+    private var slide5:FlxSprite;
+
+    //SLIDE 6
+    private var slide6:FlxSprite;
+
     private var curScene:Int = 0;
 
     override public function create():Void
@@ -144,6 +150,17 @@ class IntroCutsceneState extends FlxState
         barText4.alpha = 0;
         grp4.add(barText4);
 
+        //SLIDE 5
+        slide5 = new FlxSprite().loadGraphic(AssetPaths.slide5__png);
+        slide5.setGraphicSize(0, FlxG.height);
+        slide5.updateHitbox();
+        slide5.antialiasing = true;
+
+        slide6 = new FlxSprite().loadGraphic(AssetPaths.slide6__png);
+        slide6.setGraphicSize(0, FlxG.height);
+        slide6.updateHitbox();
+        slide6.antialiasing = true;
+
         FlxG.camera.fade(FlxColor.BLACK, 2, true, function()
         {
             FlxTween.tween(bar1Text, {alpha:1}, 3);
@@ -203,8 +220,26 @@ class IntroCutsceneState extends FlxState
 
                 case 3:
                     canContinue = false;
+                    FlxTween.tween(barText4, {alpha:0}, 1.4);
+                    FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+                    {
+                        add(slide5);
+                        FlxG.camera.stopFX();
+                        FlxG.camera.shake(0.005, 0.4);
+                        canContinue = true;
+                        curScene = 4;
+                    });
 
-                    FlxG.switchState(new PlayState());
+                case 4:
+                    canContinue = true;
+                    add(slide6);
+                    FlxG.camera.stopFX();
+                    FlxG.camera.shake(0.01, 0.8);
+                    curScene = 5;
+                case 5:
+                    canContinue = false;
+
+                    FlxG.switchState(new MenuState());
 
             }
             
