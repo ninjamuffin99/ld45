@@ -33,7 +33,7 @@ class Player extends Character
         height = 5;
         width -= 50;
         offset.x += 15;
-        hitboxes[0][0] = [30, -5, 40, 20];
+        hitboxes[0][0] = [30, -15, 40, 30];
         generateHitboxes();
 
         animation.addByPrefix("idle", "HoboIdle", 24, true);

@@ -54,8 +54,6 @@ class IntroCutsceneState extends FlxState
         slide2.updateHitbox();
         slide2.antialiasing = true;
 
-        
-
         FlxG.camera.fade(FlxColor.BLACK, 2, true, function()
         {
             FlxTween.tween(bar1Text, {alpha:1}, 3);
@@ -77,7 +75,7 @@ class IntroCutsceneState extends FlxState
                 case 0:
                     canContinue = false;
                     FlxTween.tween(bar1Text, {alpha:0}, 1.4);
-                    FlxG.camera.fade(FlxColor.BLACK, 1, false, function()
+                    FlxG.camera.fade(FlxColor.BLACK, 4, false, function()
                     {
                         add(slide2);
                         FlxG.camera.stopFX();

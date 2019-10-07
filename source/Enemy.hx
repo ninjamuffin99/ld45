@@ -109,6 +109,8 @@ class Enemy extends Character
     {
         super.getHurt(dmg, fromPos);
 
+        paralyzed += 0.5;
+
         velocity.set(velocity.x * 0.2, velocity.y * 0.2);
         attackCooldown = 3;
         justAttacked = false;

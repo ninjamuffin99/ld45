@@ -76,7 +76,15 @@ class Character extends Punchable
                 canAttack = true;
         }
         else
+        {
             paralyzed -= FlxG.elapsed;
+            attackCooldown = actualCooldownLol;
+            canAttack = false;
+            canCombo = false;
+            isAttacking = false;
+            successfulAttack = false;
+        }
+            
        
             
     }

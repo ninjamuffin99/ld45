@@ -75,8 +75,13 @@ class Grimbo extends Enemy
             animation.play("death", true);
         else
         {
+            super.kill();
+            /* 
             if (animation.curAnim.finished)
+            {
                 super.kill();
+            } 
+            */
         }
     }
 
