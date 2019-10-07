@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="impactFrames.png">
+	<!-- Created with Adobe Animate version 19.2.0.405 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="impact0000" x="0" y="0" width="305" height="253" frameX="-23" frameY="-28" frameWidth="330" frameHeight="305"/>
+	<SubTexture name="impact0001" x="305" y="0" width="305" height="253" frameX="-23" frameY="-28" frameWidth="330" frameHeight="305"/>
+	<SubTexture name="impact0002" x="610" y="0" width="315" height="288" frameX="-12" frameY="-15" frameWidth="330" frameHeight="305"/>
+	<SubTexture name="impact0003" x="610" y="0" width="315" height="288" frameX="-12" frameY="-15" frameWidth="330" frameHeight="305"/>
+	<SubTexture name="impact0004" x="0" y="288" width="325" height="302" frameX="-5" frameY="-3" frameWidth="330" frameHeight="305"/>
+	<SubTexture name="impact0005" x="325" y="288" width="325" height="278" frameX="0" frameY="0" frameWidth="330" frameHeight="305"/>
+</TextureAtlas>

@@ -189,6 +189,8 @@ class PlayState extends FlxState
 				if (FlxG.overlap(c.grpHurtboxes, _player.grpHitboxes) && _player.successfulAttack)
 				{
 					c.getHurt(0.5, _player);
+					var daImpact:Impacts = new Impacts(_player.grpHitboxes.members[0].x, _player.grpHitboxes.members[0].y - 50);
+					add(daImpact);
 				}
 
 				if (FlxG.overlap(_player.grpHurtboxes, c.grpHitboxes) && _player.invincibleFrames <= 0)
