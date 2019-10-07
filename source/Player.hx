@@ -18,7 +18,7 @@ class Player extends Character
         CHAR_TYPE = Character.PLAYER;
 
         speed = 230;
-        comboWinMin = 0.05;
+        comboWinMin = 0.01;
         comboWinMax = 0.2;
 
         color = FlxColor.WHITE;
@@ -300,6 +300,9 @@ class Player extends Character
                 rolling = false;
         }
         
+        if (blocking)
+            _attack = false;
+
         justAttacked = _attack;
 
         if (_attack && canAttack && !blocking)
