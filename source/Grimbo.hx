@@ -27,6 +27,7 @@ class Grimbo extends Enemy
 
         animation.addByPrefix("idle", "GrimboIdle", 24);
         animation.addByPrefix("walk", "GrimboWalk", 24);
+        animation.addByPrefix("death", "GrimboDeath", 16, false);
         animation.addByPrefix("attack", "GrimboAttack", 24, false);
         animation.add("hit", [25, 25, 25, 25], 12);
         attackWindup = 0.4;
@@ -66,7 +67,17 @@ class Grimbo extends Enemy
     override public function chase():Void  
     {
         super.chase();
+    }
 
+    override public function kill():Void
+    {
+        if (animation.curAnim.name != "death")
+            animation.play("death", true);
+        else
+        {
+            if (animation.curAnim.finished)
+                super.kill();
+        }
     }
 
     override public function getHurt(dmg:Float, ?pos:FlxSprite):Void
