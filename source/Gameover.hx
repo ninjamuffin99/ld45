@@ -36,7 +36,7 @@ class Gameover extends FlxState
             FlxG.camera.fade(FlxColor.BLACK, 3, false, function()
             {
                 FlxG.switchState(new MenuState());
-            })
+            });
         }
             
         super.update(e);

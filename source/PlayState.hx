@@ -10,6 +10,7 @@ import flixel.math.FlxVector;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxColor;
 import flixel.text.FlxText;
+import io.newgrounds.NG;
 
 class PlayState extends FlxState
 {
@@ -265,6 +266,12 @@ class PlayState extends FlxState
 					//var health:HealthPack = new HealthPack(c.getPosition().x, c.getPosition().y);
 					//grpItems.add(health);
 					Scores.cash += 1;
+					if (NGio.isLoggedIn)
+					{
+						var hornyMedal = NG.core.medals.get(58182);
+						if (!hornyMedal.unlocked)
+							hornyMedal.sendUnlock();
+					}
 
 					grpCharacters.remove(c, true);
 				}

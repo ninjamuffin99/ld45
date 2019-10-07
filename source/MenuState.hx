@@ -28,6 +28,10 @@ class MenuState extends FlxState
 
         persistentUpdate = false;
 
+        #if !debug
+		var ng:NGio = new NGio(APIStuff.APIKEY, APIStuff.ENCKEY);
+		#end
+
         super.create();
     }
 
