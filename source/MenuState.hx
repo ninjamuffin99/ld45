@@ -16,7 +16,13 @@ class MenuState extends FlxState
         var title:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.titlescreen__png);
         title.setGraphicSize(0, FlxG.height);
         title.updateHitbox();
+        title.antialiasing = true;
         add(title);
+
+        var logo:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.boho__png);
+        FlxTween.tween(logo.scale, {x: 1.05, y: 1.05}, 0.5, {ease:FlxEase.quadInOut, type:PINGPONG});
+        logo.antialiasing = true;
+        add(logo);
 
         persistentUpdate = false;
 

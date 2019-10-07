@@ -9,6 +9,7 @@ import flixel.util.FlxSort;
 import flixel.math.FlxVector;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxColor;
+import flixel.text.FlxText;
 
 class PlayState extends FlxState
 {
@@ -21,6 +22,7 @@ class PlayState extends FlxState
 	private var fg:FlxSprite;
 
 	public static var curBG:Int = 2;
+	private var hudCash:FlxText;
 
 	override public function create():Void
 	{
@@ -129,6 +131,11 @@ class PlayState extends FlxState
         daHealth.animation.play("health");
 		add(daHealth);
 
+		hudCash = new FlxText(0, 20, 0, "", 42);
+		hudCash.screenCenter(X);
+		hudCash.scrollFactor.set();
+		add(hudCash);
+
 		super.create();
 	}
 
@@ -136,6 +143,8 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+		hudCash.text = "$" + Scores.cash;
 
 		var xMin:Float = 0;
 		var xMax:Float = 0;
@@ -237,6 +246,7 @@ class PlayState extends FlxState
 					// if (FlxG.random.bool(10))
 					//var health:HealthPack = new HealthPack(c.getPosition().x, c.getPosition().y);
 					//grpItems.add(health);
+					Scores.cash += 1;
 
 					grpCharacters.remove(c, true);
 				}
