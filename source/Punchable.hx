@@ -103,7 +103,7 @@ class Punchable extends FlxSprite
             if (!blocking)
             {
                 actualHealth -= dmg;
-                invincibleFrames = 0.8;
+                invincibleFrames = 0.1;
 
                 if (fromPos != null)
                 {

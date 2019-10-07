@@ -113,7 +113,10 @@ class Player extends Character
         super.getHurt(dmg, fromPos);
 
         if (!blocking)
+        {
             animation.play("hurt", true);
+            invincibleFrames = 0.8;
+        }
     }
 
     private function movement():Void
