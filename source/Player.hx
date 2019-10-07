@@ -342,9 +342,17 @@ class Player extends Character
     override private function animationFixins():Void
     {
         super.animationFixins();
-        if (facing == FlxObject.LEFT && animation.curAnim.name == "punch")
+        if (facing == FlxObject.LEFT)
         {
-            offset.x = ogOffset.x + 50;
+            switch animation.curAnim.name
+            {
+                case "punch":
+                    offset.x = ogOffset.x + 50;
+                case "punchCombo":
+                    offset.x = ogOffset.x + 50;
+                default:
+                    offset.x = ogOffset.x;
+            }
         }
         else
             offset.x = ogOffset.x;
