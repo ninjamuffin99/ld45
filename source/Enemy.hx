@@ -69,7 +69,7 @@ class Enemy extends Character
         {
             _brain.activeState = idle;
         }
-        else if (invincibleFrames <= 0)
+        else if (recoilTime <= 0)
         {
             var rads:Float = Math.atan2(_player.getMidpoint().y - getMidpoint().y, _player.getMidpoint().x - getMidpoint().x);
 		    var degs = FlxAngle.asDegrees(rads);
@@ -129,7 +129,7 @@ class Enemy extends Character
         _brain.update();
         super.update(elapsed);
 
-        if (invincibleFrames <= 0)
+        if (recoilTime <= 0)
         {
             if (velocity.x > 0)
                 facing = FlxObject.RIGHT;

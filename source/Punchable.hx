@@ -20,6 +20,7 @@ class Punchable extends FlxSprite
 
     public var actualHealth:Float = 1;
     public var invincibleFrames:Float = 0;
+    public var recoilTime:Float = 0;
 
     public var hurtboxes:Array<Dynamic> = 
     [
@@ -104,6 +105,7 @@ class Punchable extends FlxSprite
             {
                 actualHealth -= dmg;
                 invincibleFrames = 0.1;
+                recoilTime = 0.1;
 
                 if (fromPos != null)
                 {
@@ -124,6 +126,9 @@ class Punchable extends FlxSprite
         {
             invincibleFrames -= FlxG.elapsed;
         }
+
+        if (recoilTime > 0)
+            recoilTime -= FlxG.elapsed;
 
             
         if (actualHealth <= 0)

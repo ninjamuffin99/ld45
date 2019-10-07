@@ -55,7 +55,7 @@ class Grimbo extends Enemy
         FlxG.watch.addQuick("WINDUP", attackWindup);
         FlxG.watch.addQuick("TIMER", attackTmr);
 
-        if (invincibleFrames <= 0 && !isAttacking)
+        if (recoilTime <= 0 && !isAttacking)
         {
             if (velocity.x != 0 || velocity.y != 0)
                 animation.play("walk");
@@ -89,6 +89,7 @@ class Grimbo extends Enemy
     {
         super.getHurt(dmg, pos);
         animation.play("hit");
+        recoilTime = 0.8;
     }
 
     override private function animationFixins():Void
