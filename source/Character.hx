@@ -15,6 +15,7 @@ class Character extends Punchable
     public var comboWinMin:Float = 0;
     public var comboWinMax:Float = 0;
     public var canCombo:Bool = false;
+    public var alternatingPunch:Bool = false;
 
     public var paralyzed:Float = 0;
 

@@ -307,7 +307,8 @@ class Player extends Character
 
         if (_attack && canAttack && !blocking)
         {
-            if (canCombo)
+            alternatingPunch = !alternatingPunch;
+            if (alternatingPunch)
                 animation.play("punchCombo", true);
             else
                 animation.play("punch", true);
