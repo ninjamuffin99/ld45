@@ -7,6 +7,7 @@ import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.util.FlxSort;
 import flixel.math.FlxVector;
+import flixel.graphics.frames.FlxAtlasFrames;
 
 class PlayState extends FlxState
 {
@@ -16,33 +17,72 @@ class PlayState extends FlxState
 	private var grpCharacters:FlxTypedGroup<Character>;
 	private var grpItems:FlxTypedGroup<Item>;
 
+	private var fg:FlxSprite;
+
 	override public function create():Void
 	{
 		trace("BOOTED UP");
 
 		FlxG.watch.addMouse();	
 
-		ground = new FlxSprite(0, FlxG.height - 10).makeGraphic(FlxG.width, 10);
+		persistentUpdate = false;
+		persistentDraw = true;
+
+		ground = new FlxSprite(0, FlxG.height - 10).makeGraphic(FlxG.width * 3, 10);
 		ground.immovable = true;
 		add(ground);
 
-		ground2 = new FlxSprite(0, FlxG.height - 260).makeGraphic(FlxG.width, 10);
+		ground2 = new FlxSprite(0, FlxG.height - 260).makeGraphic(FlxG.width * 3, 10);
 		ground2.immovable = true;
 		add(ground2);
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_1__png);
-		bg.setGraphicSize(FlxG.width, FlxG.height);
+		bg.setGraphicSize(0, FlxG.height);
 		bg.updateHitbox();
+		bg.scrollFactor.set();
 		add(bg);
+
+		var clouds:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_2__png);
+		clouds.setGraphicSize(0, FlxG.height);
+		clouds.updateHitbox();
+		clouds.scrollFactor.set(0.25, 0.25);
+		add(clouds);
+
+		var mountain:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_3__png);
+		mountain.setGraphicSize(0, FlxG.height);
+		mountain.updateHitbox();
+		mountain.scrollFactor.set(0.4, 0.4);
+		add(mountain);
+
+		var mountain2:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_4__png);
+		mountain2.setGraphicSize(0, FlxG.height);
+		mountain2.updateHitbox();
+		mountain2.scrollFactor.set(0.55, 0.55);
+		add(mountain2);
+
+		var mountain3:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_5__png);
+		mountain3.setGraphicSize(0, FlxG.height);
+		mountain3.updateHitbox();
+		mountain3.scrollFactor.set(0.7, 0.7);
+		add(mountain3);
+
 
 		var bg4:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_6__png);
 		add(bg4);
+
+		fg = new FlxSprite(0, 10).loadGraphic(AssetPaths.bg1_7__png);
+		fg.alpha = 1;
+		fg.scrollFactor.set(2.2, 2.2);
+		//gets added after the player
+		
 
 		grpItems = new FlxTypedGroup<Item>();
 		add(grpItems);
 
 		grpCharacters = new FlxTypedGroup<Character>();
 		add(grpCharacters);
+
+		add(fg);
 
 		_player = new Player(100, 400);
 		grpCharacters.add(_player);
@@ -59,7 +99,21 @@ class PlayState extends FlxState
 		add(g.grpHitboxes);
 		add(g.grpHurtboxes);
 
-		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
+		FlxG.camera.follow(_player);
+		var camYOffset:Float = 50;
+		FlxG.camera.setScrollBoundsRect(0, -camYOffset, bg4.width, bg4.height + camYOffset);
+
+		FlxG.worldBounds.set(0, 0, FlxG.width * 3, FlxG.height);
+
+		var daHealth:Healthbar = new Healthbar(10, 10, _player);
+		var phealth = FlxAtlasFrames.fromSparrow(AssetPaths.HealthBears__png, AssetPaths.HealthBears__xml);
+		daHealth.frames = phealth;
+		daHealth.setGraphicSize(Std.int(daHealth.width * 0.5));
+		daHealth.updateHitbox();
+		daHealth.antialiasing = true;
+		daHealth.animation.add("health", [4, 3, 2, 1, 0], 0);
+        daHealth.animation.play("health");
+		add(daHealth);
 
 		super.create();
 	}
@@ -69,6 +123,32 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+
+		if (_player.x > 460 && _player.x < 900)
+		{
+			if (fg.alpha > 0.3)
+			{
+				fg.alpha -= FlxG.elapsed;
+			}
+			
+		}
+		else
+		{
+			if (fg.alpha < 1)
+			{
+				fg.alpha += FlxG.elapsed;
+			}
+		}
+
+		var gamepad = FlxG.gamepads.lastActive;
+		if (gamepad != null)
+		{
+			if (gamepad.justPressed.START)
+				openSubState(new SubstatePause());
+		}
+
+		if (FlxG.keys.justPressed.ENTER)
+			openSubState(new SubstatePause());
 
 		if (grpCharacters.length == 1)
 		{
@@ -98,8 +178,6 @@ class PlayState extends FlxState
 				var dy:Float = c.getMidpoint().y - _player.getMidpoint().y;
 				var distanceToPlayer:Int = Std.int(FlxMath.vectorLength(dx, dy));
 
-				FlxG.watch.addQuick("Dist to player", distanceToPlayer);
-
 				if (distanceToPlayer < 300 && !_player.isDead)
 				{
 					c.seesPlayer = true;
@@ -108,7 +186,7 @@ class PlayState extends FlxState
 				else
 					c.seesPlayer = false;
 
-				if (FlxG.overlap(c.grpHurtboxes, _player.grpHitboxes) && _player.isAttacking)
+				if (FlxG.overlap(c.grpHurtboxes, _player.grpHitboxes) && _player.successfulAttack)
 				{
 					c.getHurt(0.5, _player);
 				}
@@ -116,10 +194,10 @@ class PlayState extends FlxState
 				if (FlxG.overlap(_player.grpHurtboxes, c.grpHitboxes) && _player.invincibleFrames <= 0)
 				{
 					c.isAttacking = true;
-						
+					c.attackOverlapping = true;
 				}
 				else
-					c.isAttacking = false;
+					c.attackOverlapping = false;
 				
 				if (!c.alive)
 				{

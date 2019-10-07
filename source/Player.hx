@@ -6,6 +6,7 @@ import flixel.util.FlxColor;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxObject;
 import flixel.math.FlxPoint;
+import flixel.effects.FlxFlicker;
 
 class Player extends Character
 {
@@ -18,6 +19,8 @@ class Player extends Character
         CHAR_TYPE = Character.PLAYER;
 
         speed = 230;
+        comboWinMin = 0.01;
+        comboWinMax = 0.22;
 
         color = FlxColor.WHITE;
         var tex = FlxAtlasFrames.fromSparrow(AssetPaths.HoboMoveSet__png, AssetPaths.HoboMoveSet__xml);
@@ -27,12 +30,15 @@ class Player extends Character
         antialiasing = true;
         offset.y = 165;
         var daOffsetY:Float = height - offset.y;
-        height = 15;
-        hitboxes[0][0] = [30, -5, 40, 20];
+        height = 5;
+        width -= 50;
+        offset.x += 15;
+        hitboxes[0][0] = [30, -15, 40, 30];
         generateHitboxes();
 
         animation.addByPrefix("idle", "HoboIdle", 24, true);
         animation.addByPrefix("punch", "HoboPunch", 24, false);
+        animation.addByPrefix("punchCombo", "HoboCombo", 24, false);
         animation.addByPrefix("walk", "HoboWalk", 24, true);
         animation.addByPrefix("hurt", "HoboHurt", 20, false);
         animation.addByPrefix("killed", "HoboDeath", 24, false);
@@ -60,6 +66,8 @@ class Player extends Character
         drag.x = 700;
         drag.y = 700;
 
+        actualCooldownLol = 0.5;
+
         ogOffset = new FlxPoint(offset.x, offset.y);
         trace(ogOffset);
     }
@@ -70,9 +78,11 @@ class Player extends Character
     {
         super.update(elapsed);
 
-
-        FlxG.watch.addQuick("FullPos", getPosition());
-        FlxG.watch.addQuick("OriginPlayer", origin);
+        if (invincibleFrames > 0)
+        {
+            if (!FlxFlicker.isFlickering(this))
+                FlxFlicker.flicker(this, 0.8, 0.05, true, true);
+        }
         
         /* 
         if (getPosition().x != daSprite.getPosition().x)
@@ -96,7 +106,6 @@ class Player extends Character
 
         FlxG.watch.addQuick("curANime", animation.curAnim.name);
         FlxG.watch.addQuick("offset", offset);
-
     }
 
     override public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void
@@ -104,7 +113,10 @@ class Player extends Character
         super.getHurt(dmg, fromPos);
 
         if (!blocking)
+        {
             animation.play("hurt", true);
+            invincibleFrames = 0.8;
+        }
     }
 
     private function movement():Void
@@ -127,7 +139,6 @@ class Player extends Character
         var gamepad = FlxG.gamepads.lastActive;
 		if (gamepad != null)
 		{
-            FlxG.watch.addQuick("AnalogSHit", gamepad.analog.value.LEFT_STICK_X);
 			if (gamepad.anyPressed(["LEFT", "DPAD_LEFT", "LEFT_STICK_DIGITAL_LEFT"]))
 			{
 				_left = true;
@@ -298,11 +309,19 @@ class Player extends Character
             if (velocity.x == 0 && velocity.y == 0)
                 rolling = false;
         }
+        
+        if (blocking)
+            _attack = false;
+
+        justAttacked = _attack;
 
         if (_attack && canAttack && !blocking)
         {
-            isAttacking = true;
-            animation.play("punch", true);
+            alternatingPunch = !alternatingPunch;
+            if (alternatingPunch)
+                animation.play("punchCombo", true);
+            else
+                animation.play("punch", true);
         }
 
         if (animation.curAnim.name != "idle" && animation.curAnim.finished && animation.curAnim.name != "block")
@@ -312,10 +331,10 @@ class Player extends Character
         }
             
 
-        if (animation.curAnim.name == "punch")
+        if (animation.curAnim.name == "punch" || animation.curAnim.name == "punchCombo")
         {
-            velocity.x *= 0.2;
-            velocity.y *= 0.2;
+            velocity.x *= 0.1;
+            velocity.y *= 0.1;
         }
 
     }
@@ -333,9 +352,19 @@ class Player extends Character
     override private function animationFixins():Void
     {
         super.animationFixins();
-        if (facing == FlxObject.LEFT && animation.curAnim.name == "punch")
+        if (facing == FlxObject.LEFT)
         {
-            offset.x = ogOffset.x + 50;
+            switch animation.curAnim.name
+            {
+                case "punch":
+                    offset.x = ogOffset.x + 50;
+                case "punchCombo":
+                    offset.x = ogOffset.x + 50;
+                case "idle":
+                    offset.x = ogOffset.x;
+                default:
+                    offset.x = ogOffset.x;
+            }
         }
         else
             offset.x = ogOffset.x;

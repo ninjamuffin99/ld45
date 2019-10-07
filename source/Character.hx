@@ -6,8 +6,18 @@ class Character extends Punchable
 {
     private var speed:Float = 100;
     public var isAttacking:Bool = false;
+    public var justAttacked:Bool = false;
+    public var attackOverlapping:Bool = false;
+    public var successfulAttack:Bool = false;
+    public var actualCooldownLol:Float = 0.3;
     public var attackCooldown:Float = 0;
     public var canAttack:Bool = true;
+    public var comboWinMin:Float = 0;
+    public var comboWinMax:Float = 0;
+    public var canCombo:Bool = false;
+    public var alternatingPunch:Bool = false;
+
+    public var paralyzed:Float = 0;
 
     public var CHAR_TYPE:Int = 0;
     public static inline var ENEMY:Int = 10;
@@ -25,21 +35,57 @@ class Character extends Punchable
 
     }
 
-    override public function update(elapsed:Float):Void
+    override public function update(e:Float):Void
     {
-        super.update(elapsed);
+        super.update(e);
+
         animationFixins();
 
-        if (isAttacking)
-            attackCooldown = 0.3;
+        FlxG.watch.addQuick("Can Attack", canAttack);
+        FlxG.watch.addQuick("Just attackd", justAttacked);
+        FlxG.watch.addQuick("Attack cooldown", attackCooldown);
+        
+        if (paralyzed <= 0)
+        {
+            if (justAttacked && canAttack)
+            {
+                attackCooldown = actualCooldownLol;
+            }
 
-        if (attackCooldown > 0)
-        {   
-            attackCooldown -= FlxG.elapsed;
-            canAttack = false;
+            if (attackCooldown > 0)
+            {   
+                if (justAttacked)
+                    successfulAttack = true;
+                else
+                    successfulAttack = false;
+
+                attackCooldown -= FlxG.elapsed;
+                if (attackCooldown > comboWinMin && attackCooldown < comboWinMax)
+                {
+                    canCombo = true;
+                    canAttack = true;
+                }
+                else
+                {
+                    canCombo = false;
+                    canAttack = false;
+                }
+                    
+            }
+            else
+                canAttack = true;
         }
         else
-            canAttack = true;
+        {
+            paralyzed -= FlxG.elapsed;
+            attackCooldown = actualCooldownLol;
+            canAttack = false;
+            canCombo = false;
+            isAttacking = false;
+            successfulAttack = false;
+        }
+            
+       
             
     }
 

@@ -20,6 +20,7 @@ class Punchable extends FlxSprite
 
     public var actualHealth:Float = 1;
     public var invincibleFrames:Float = 0;
+    public var recoilTime:Float = 0;
 
     public var hurtboxes:Array<Dynamic> = 
     [
@@ -47,9 +48,11 @@ class Punchable extends FlxSprite
         height = daOffsetY;
 
         grpHurtboxes = new FlxTypedSpriteGroup<Hitbox>();
+        grpHurtboxes.visible = false;
         //add(grpHurtboxes);
 
         grpHitboxes = new FlxTypedSpriteGroup<Hitbox>();
+        grpHitboxes.visible = false;
         //add(grpHitboxes);
 
         drag.x = 300;
@@ -101,7 +104,8 @@ class Punchable extends FlxSprite
             if (!blocking)
             {
                 actualHealth -= dmg;
-                invincibleFrames = 0.8;
+                invincibleFrames = 0.1;
+                recoilTime = 0.1;
 
                 if (fromPos != null)
                 {
@@ -120,14 +124,12 @@ class Punchable extends FlxSprite
 
         if (invincibleFrames > 0)
         {
-            if (!FlxFlicker.isFlickering(this))
-                FlxFlicker.flicker(this, 0.8, 0.05, true, true);
-            
             invincibleFrames -= FlxG.elapsed;
         }
-        else
 
-            //visible = true;
+        if (recoilTime > 0)
+            recoilTime -= FlxG.elapsed;
+
             
         if (actualHealth <= 0)
             getKilled();

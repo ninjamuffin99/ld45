@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.math.FlxVelocity;
 import flixel.FlxObject;
 import flixel.math.FlxMath;
+import flixel.FlxSprite;
 import flixel.math.FlxAngle;
 
 class Enemy extends Character
@@ -29,6 +30,8 @@ class Enemy extends Character
         _brain = new FSM(idle);
         _idleTmr = 0;
         playerPos = FlxPoint.get();
+
+        attackCooldown = 5;
 
         _player = p;
     }
@@ -66,7 +69,7 @@ class Enemy extends Character
         {
             _brain.activeState = idle;
         }
-        else if (invincibleFrames <= 0)
+        else if (recoilTime <= 0)
         {
             var rads:Float = Math.atan2(_player.getMidpoint().y - getMidpoint().y, _player.getMidpoint().x - getMidpoint().x);
 		    var degs = FlxAngle.asDegrees(rads);
@@ -87,12 +90,32 @@ class Enemy extends Character
 
         if (attackTmr >= attackWindup)
         {
-            _player.getHurt(0.25, this);
-            attackTmr = 0;
+            justAttacked = true;
+
+            if (successfulAttack)
+            {
+                if (attackOverlapping)
+                    _player.getHurt(0.25, this);
+                attackTmr = 0;
+                isAttacking = false;
+            }
         }
             
         if (!isAttacking || _player.isDead)
             _brain.activeState = idle;
+    }
+
+    override public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void
+    {
+        super.getHurt(dmg, fromPos);
+
+        paralyzed += 0.5;
+
+        velocity.set(velocity.x * 0.2, velocity.y * 0.2);
+        attackCooldown = 3;
+        justAttacked = false;
+        attackTmr = 0;
+        isAttacking = false;
     }
 
     override private function getKilled():Void
@@ -106,7 +129,7 @@ class Enemy extends Character
         _brain.update();
         super.update(elapsed);
 
-        if (invincibleFrames <= 0)
+        if (recoilTime <= 0)
         {
             if (velocity.x > 0)
                 facing = FlxObject.RIGHT;
@@ -114,5 +137,4 @@ class Enemy extends Character
                 facing = FlxObject.LEFT;
         }
     }
-
 }
