@@ -15,6 +15,9 @@ class PlayState extends FlxState
 {
 	private var ground:FlxSprite;
 	private var ground2:FlxSprite;
+	private var wall:FlxSprite;
+	private var wall2:FlxSprite;
+
 	private var _player:Player;
 	private var grpCharacters:FlxTypedGroup<Character>;
 	private var grpItems:FlxTypedGroup<Item>;
@@ -28,6 +31,8 @@ class PlayState extends FlxState
 	{
 		trace("BOOTED UP");
 		FlxG.camera.fade(FlxColor.BLACK, 1, true);
+		FlxG.sound.playMusic(AssetPaths.toughBunny__mp3, 0);
+		FlxG.sound.music.fadeIn(10, 0, 0.7);
 
 		FlxG.watch.addMouse();	
 
@@ -41,6 +46,14 @@ class PlayState extends FlxState
 		ground2 = new FlxSprite(0, FlxG.height - 260).makeGraphic(FlxG.width * 3, 10);
 		ground2.immovable = true;
 		add(ground2);
+
+		wall = new FlxSprite().makeGraphic(10, FlxG.height);
+		wall.immovable = true;
+		add(wall);
+
+		wall2 = new FlxSprite().makeGraphic(10, FlxG.height);
+		wall2.immovable = true;
+		add(wall2);
 
 		var bgNum:Int = curBG;
 		
@@ -119,6 +132,11 @@ class PlayState extends FlxState
 		var camYOffset:Float = 50;
 		FlxG.camera.setScrollBoundsRect(0, -camYOffset, bg4.width, bg4.height + camYOffset);
 
+		wall2 = new FlxSprite(bg4.width - 10).makeGraphic(10, FlxG.height);
+		wall2.immovable = true;
+		wall2.visible = false;
+		add(wall2);
+
 		FlxG.worldBounds.set(0, 0, FlxG.width * 3, FlxG.height);
 
 		var daHealth:Healthbar = new Healthbar(10, 10, _player);
@@ -192,7 +210,7 @@ class PlayState extends FlxState
 		{
 			for (i in 0...FlxG.random.int(2, 6))
 			{
-				var grim:Grimbo = new Grimbo(FlxG.random.float(40, FlxG.width - 120), FlxG.random.float(FlxG.height - 220, FlxG.height - 130), _player);
+				var grim:Grimbo = new Grimbo(FlxG.random.float(40, 1269 - 120), FlxG.random.float(FlxG.height - 220, FlxG.height - 130), _player);
 				grpCharacters.add(grim);
 				add(grim.grpHitboxes);
 				add(grim.grpHurtboxes);
@@ -253,10 +271,20 @@ class PlayState extends FlxState
 			}
 		});
 
+		if (_player.successfulAttack && _player.attackOverlapping)
+		{
+			if (_player.alternatingPunch)
+				FlxG.sound.play(AssetPaths.punchGood2__mp3, 0.5);
+			else
+				FlxG.sound.play(AssetPaths.punchGood__mp3, 0.5);
+		}
+
 		grpCharacters.sort(Punchable.bySprite, FlxSort.ASCENDING);
 
 		FlxG.collide(ground, grpCharacters);
 		FlxG.collide(ground2, grpCharacters);
+		FlxG.collide(wall, grpCharacters);
+		FlxG.collide(wall2, grpCharacters);
 		FlxG.collide(grpCharacters, grpCharacters);
 	
 	}

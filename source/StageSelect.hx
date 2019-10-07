@@ -76,6 +76,8 @@ class StageSelect extends FlxSubState
                 default:
 
             }
+
+            FlxG.sound.music.fadeOut(1, 0);
             FlxG.camera.fade(FlxColor.BLACK, 1, false, function()
             {
                 FlxG.switchState(new PlayState());

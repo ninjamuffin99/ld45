@@ -13,6 +13,8 @@ class MenuState extends FlxState
     {
         FlxG.camera.fade(FlxColor.BLACK, 1, true);
 
+        FlxG.sound.playMusic(AssetPaths.hardReset__mp3, 0.5);
+
         var title:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.titlescreen__png);
         title.setGraphicSize(0, FlxG.height);
         title.updateHitbox();

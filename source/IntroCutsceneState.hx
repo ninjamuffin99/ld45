@@ -46,6 +46,9 @@ class IntroCutsceneState extends FlxState
 
     override public function create():Void
     {
+        FlxG.sound.playMusic(AssetPaths.introSong__mp3, 0);
+        FlxG.sound.music.fadeIn(4, 0, 0.2);
+
         spaceBG = new FlxSprite().loadGraphic(AssetPaths.space__png);
         spaceBG.setGraphicSize(0, Std.int(FlxG.height));
         spaceBG.updateHitbox();
@@ -174,6 +177,8 @@ class IntroCutsceneState extends FlxState
     {
         if (FlxG.keys.justPressed.ENTER)
         {
+            FlxG.sound.music.fadeOut(0.4, 0);
+
             FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function()
             {
                 FlxG.switchState(new MenuState());
@@ -242,6 +247,7 @@ class IntroCutsceneState extends FlxState
                     add(slide6);
                     FlxG.camera.stopFX();
                     FlxG.camera.shake(0.01, 0.8);
+                    FlxG.sound.music.fadeOut(2, 0.1);
                     curScene = 5;
                 case 5:
                     canContinue = false;

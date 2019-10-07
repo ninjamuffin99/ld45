@@ -100,7 +100,10 @@ class Player extends Character
             resetTimer += FlxG.elapsed;
 
             if (resetTimer >= 1.5)
-                FlxG.resetState();
+            {
+                FlxG.switchState(new Gameover());
+            }
+                
         }
         
         if (offset != ogOffset && animation.curAnim.name == "idle")
@@ -318,9 +321,13 @@ class Player extends Character
         {
             alternatingPunch = !alternatingPunch;
             if (alternatingPunch)
+            {
                 animation.play("punchCombo", true);
+            }
             else
+            {
                 animation.play("punch", true);
+            }
         }
 
         if (animation.curAnim.name != "idle" && animation.curAnim.finished && animation.curAnim.name != "block")
