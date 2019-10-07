@@ -136,24 +136,6 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		
-		if (FlxG.keys.justPressed.ONE)
-		{
-			curBG = 1;
-			FlxG.resetState();
-		}
-		if (FlxG.keys.justPressed.TWO)
-		{
-			curBG = 2;
-			FlxG.resetState();
-		}
-		if (FlxG.keys.justPressed.THREE)
-		{
-			curBG = 3;
-			FlxG.resetState();
-		}
-			
-
 
 		var xMin:Float = 0;
 		var xMax:Float = 0;
