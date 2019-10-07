@@ -122,14 +122,9 @@ class Punchable extends FlxSprite
 
         if (invincibleFrames > 0)
         {
-            if (!FlxFlicker.isFlickering(this))
-                FlxFlicker.flicker(this, 0.8, 0.05, true, true);
-            
             invincibleFrames -= FlxG.elapsed;
         }
-        else
 
-            //visible = true;
             
         if (actualHealth <= 0)
             getKilled();

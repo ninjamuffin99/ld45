@@ -6,6 +6,7 @@ import flixel.util.FlxColor;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.FlxObject;
 import flixel.math.FlxPoint;
+import flixel.effects.FlxFlicker;
 
 class Player extends Character
 {
@@ -76,6 +77,12 @@ class Player extends Character
     override public function update(elapsed:Float):Void
     {
         super.update(elapsed);
+
+        if (invincibleFrames > 0)
+        {
+            if (!FlxFlicker.isFlickering(this))
+                FlxFlicker.flicker(this, 0.8, 0.05, true, true);
+        }
         
         /* 
         if (getPosition().x != daSprite.getPosition().x)
