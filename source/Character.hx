@@ -47,7 +47,7 @@ class Character extends Punchable
         
         if (paralyzed <= 0)
         {
-            if (justAttacked)
+            if (justAttacked && canAttack)
             {
                 attackCooldown = actualCooldownLol;
             }
