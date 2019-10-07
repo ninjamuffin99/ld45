@@ -30,7 +30,7 @@ class Grimbo extends Enemy
         animation.addByPrefix("death", "GrimboDeath", 16, false);
         animation.addByPrefix("attack", "GrimboAttack", 24, false);
         animation.add("hit", [25, 25, 25, 25], 12);
-        attackWindup = 0.4;
+        attackWindup = 0.5;
         actualCooldownLol = 1.3;
         animation.play("idle");
 

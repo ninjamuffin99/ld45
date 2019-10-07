@@ -20,7 +20,7 @@ class Player extends Character
 
         speed = 230;
         comboWinMin = 0.01;
-        comboWinMax = 0.22;
+        comboWinMax = 0.19;
 
         color = FlxColor.WHITE;
         var tex = FlxAtlasFrames.fromSparrow(AssetPaths.HoboMoveSet__png, AssetPaths.HoboMoveSet__xml);
@@ -103,9 +103,6 @@ class Player extends Character
                 FlxG.resetState();
         }
         
-
-        FlxG.watch.addQuick("curANime", animation.curAnim.name);
-        FlxG.watch.addQuick("offset", offset);
         if (offset != ogOffset && animation.curAnim.name == "idle")
             offset.x = ogOffset.x;
     }

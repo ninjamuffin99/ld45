@@ -42,6 +42,7 @@ class Character extends Punchable
 
         super.update(e);
 
+        FlxG.watch.addQuick("CAN COMBO", canCombo);
         
         if (paralyzed <= 0)
         {
@@ -49,6 +50,8 @@ class Character extends Punchable
             {
                 attackCooldown = actualCooldownLol;
             }
+
+            canCombo = attackOverlapping;
 
             if (attackCooldown > 0)
             {   
@@ -58,20 +61,19 @@ class Character extends Punchable
                     successfulAttack = false;
 
                 attackCooldown -= FlxG.elapsed;
-                if (attackCooldown > comboWinMin && attackCooldown < comboWinMax)
+                if (attackCooldown > comboWinMin && attackCooldown < comboWinMax && canCombo)
                 {
-                    canCombo = true;
                     canAttack = true;
                 }
                 else
                 {
-                    canCombo = false;
                     canAttack = false;
                 }
                     
             }
             else
             {
+                attackOverlapping = false;
                 isAttacking = false;
                 canAttack = true;
             }
