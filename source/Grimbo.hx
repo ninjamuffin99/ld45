@@ -62,6 +62,9 @@ class Grimbo extends Enemy
             else if (animation.curAnim.name != "idle")
                 animation.play("idle");     
         }
+
+        if (offset != ogOffset && animation.curAnim.name == "walk")
+            offset.x = ogOffset.x;
     }
 
     override public function chase():Void  
