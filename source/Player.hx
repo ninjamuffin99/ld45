@@ -19,7 +19,7 @@ class Player extends Character
 
         speed = 230;
         comboWinMin = 0.01;
-        comboWinMax = 0.2;
+        comboWinMax = 0.22;
 
         color = FlxColor.WHITE;
         var tex = FlxAtlasFrames.fromSparrow(AssetPaths.HoboMoveSet__png, AssetPaths.HoboMoveSet__xml);
@@ -321,10 +321,10 @@ class Player extends Character
         }
             
 
-        if (animation.curAnim.name == "punch")
+        if (animation.curAnim.name == "punch" || animation.curAnim.name == "punchCombo")
         {
-            velocity.x *= 0.2;
-            velocity.y *= 0.2;
+            velocity.x *= 0.1;
+            velocity.y *= 0.1;
         }
 
     }
@@ -350,6 +350,8 @@ class Player extends Character
                     offset.x = ogOffset.x + 50;
                 case "punchCombo":
                     offset.x = ogOffset.x + 50;
+                case "idle":
+                    offset.x = ogOffset.x;
                 default:
                     offset.x = ogOffset.x;
             }
