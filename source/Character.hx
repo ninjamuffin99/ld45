@@ -38,13 +38,10 @@ class Character extends Punchable
 
     override public function update(e:Float):Void
     {
-        super.update(e);
-
         animationFixins();
 
-        FlxG.watch.addQuick("Can Attack", canAttack);
-        FlxG.watch.addQuick("Just attackd", justAttacked);
-        FlxG.watch.addQuick("Attack cooldown", attackCooldown);
+        super.update(e);
+
         
         if (paralyzed <= 0)
         {
