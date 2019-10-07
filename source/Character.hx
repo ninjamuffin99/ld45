@@ -1,6 +1,7 @@
 package;
 import flixel.FlxG;
 import flixel.math.FlxPoint;
+import flixel.util.FlxColor;
 
 class Character extends Punchable
 {
@@ -83,10 +84,7 @@ class Character extends Punchable
             canCombo = false;
             isAttacking = false;
             successfulAttack = false;
-        }
-            
-       
-            
+        }    
     }
 
     private function animationFixins():Void

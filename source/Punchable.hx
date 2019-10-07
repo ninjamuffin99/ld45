@@ -17,6 +17,9 @@ class Punchable extends FlxSprite
     public var grpHitboxes:FlxTypedSpriteGroup<Hitbox>;
     public var curAnimation:Int = 0;
     public var blocking:Bool = false;
+    public var justHurt:Bool = false;
+    public var justHurtframecount:Int = 6;
+    private var _hurtinCount:Int = 0;
 
     public var actualHealth:Float = 1;
     public var invincibleFrames:Float = 0;
@@ -103,6 +106,7 @@ class Punchable extends FlxSprite
         {
             if (!blocking)
             {
+                justHurt = true;
                 actualHealth -= dmg;
                 invincibleFrames = 0.1;
                 recoilTime = 0.1;
@@ -144,6 +148,20 @@ class Punchable extends FlxSprite
             setSpritePos(spr);
 
         });
+
+        if (justHurt)
+        {
+            color = FlxColor.RED;
+
+            _hurtinCount += 1;
+            if (_hurtinCount >= justHurtframecount)
+            {
+                _hurtinCount = 0;
+                justHurt = false;
+            }
+        }    
+        else
+            color = FlxColor.WHITE;
 
         // testObj.setPosition(daSprite.x + hurtboxes[0][0][0], daSprite.y + hurtboxes[0][0][1]);
 
