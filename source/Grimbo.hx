@@ -78,11 +78,29 @@ class Grimbo extends Enemy
     override private function animationFixins():Void
     {
         super.animationFixins();
-        if (facing == FlxObject.LEFT && animation.curAnim.name == "attack")
+
+        if (facing == FlxObject.LEFT)
         {
-            offset.x = ogOffset.x + 100;
+            switch animation.curAnim.name
+            {
+                case "attack":
+                    offset.x = ogOffset.x + 100;
+                default:
+                    offset.x = ogOffset.x;
+            }
         }
         else
-            offset.x = ogOffset.x;
+        {
+            switch animation.curAnim.name
+            {
+                case "hit":
+                    offset.x = ogOffset.x + 90;
+                default:
+                    offset.x = ogOffset.x;
+            }
+        }
+        
+        
+            
     }
 }

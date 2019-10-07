@@ -135,5 +135,4 @@ class Enemy extends Character
                 facing = FlxObject.LEFT;
         }
     }
-
 }
