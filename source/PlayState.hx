@@ -191,6 +191,7 @@ class PlayState extends FlxState
 					c.getHurt(0.5, _player);
 					var daImpact:Impacts = new Impacts(_player.grpHitboxes.members[0].x, _player.grpHitboxes.members[0].y - 50);
 					add(daImpact);
+					FlxG.camera.shake(FlxG.random.float(0.008, 0.012), FlxG.random.float(0.07, 0.11));
 				}
 
 				if (FlxG.overlap(_player.grpHurtboxes, c.grpHitboxes) && _player.invincibleFrames <= 0)
