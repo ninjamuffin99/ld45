@@ -12,6 +12,9 @@ class Character extends Punchable
     public var actualCooldownLol:Float = 0.3;
     public var attackCooldown:Float = 0;
     public var canAttack:Bool = true;
+    public var comboWinMin:Float = 0;
+    public var comboWinMax:Float = 0;
+    public var canCombo:Bool = false;
 
     public var paralyzed:Float = 0;
 
@@ -56,11 +59,23 @@ class Character extends Punchable
                     successfulAttack = false;
 
                 attackCooldown -= FlxG.elapsed;
-                canAttack = false;
+                if (attackCooldown > comboWinMin && attackCooldown < comboWinMax)
+                {
+                    canCombo = true;
+                    canAttack = true;
+                }
+                else
+                {
+                    canCombo = false;
+                    canAttack = false;
+                }
+                    
             }
             else
                 canAttack = true;
         }
+        else
+            paralyzed -= FlxG.elapsed;
        
             
     }

@@ -18,6 +18,8 @@ class Player extends Character
         CHAR_TYPE = Character.PLAYER;
 
         speed = 230;
+        comboWinMin = 0.05;
+        comboWinMax = 0.2;
 
         color = FlxColor.WHITE;
         var tex = FlxAtlasFrames.fromSparrow(AssetPaths.HoboMoveSet__png, AssetPaths.HoboMoveSet__xml);
@@ -35,6 +37,7 @@ class Player extends Character
 
         animation.addByPrefix("idle", "HoboIdle", 24, true);
         animation.addByPrefix("punch", "HoboPunch", 24, false);
+        animation.addByPrefix("punchCombo", "HoboCombo", 24, false);
         animation.addByPrefix("walk", "HoboWalk", 24, true);
         animation.addByPrefix("hurt", "HoboHurt", 20, false);
         animation.addByPrefix("killed", "HoboDeath", 24, false);
@@ -61,6 +64,8 @@ class Player extends Character
         facing = FlxObject.RIGHT;
         drag.x = 700;
         drag.y = 700;
+
+        actualCooldownLol = 0.5;
 
         ogOffset = new FlxPoint(offset.x, offset.y);
         trace(ogOffset);
@@ -299,7 +304,10 @@ class Player extends Character
 
         if (_attack && canAttack && !blocking)
         {
-            animation.play("punch", true);
+            if (canCombo)
+                animation.play("punchCombo", true);
+            else
+                animation.play("punch", true);
         }
 
         if (animation.curAnim.name != "idle" && animation.curAnim.finished && animation.curAnim.name != "block")
