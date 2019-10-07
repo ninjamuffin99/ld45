@@ -8,6 +8,7 @@ import flixel.math.FlxMath;
 import flixel.util.FlxSort;
 import flixel.math.FlxVector;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.util.FlxColor;
 
 class PlayState extends FlxState
 {
@@ -19,9 +20,12 @@ class PlayState extends FlxState
 
 	private var fg:FlxSprite;
 
+	public static var curBG:Int = 2;
+
 	override public function create():Void
 	{
 		trace("BOOTED UP");
+		FlxG.camera.fade(FlxColor.BLACK, 1, true);
 
 		FlxG.watch.addMouse();	
 
@@ -36,43 +40,53 @@ class PlayState extends FlxState
 		ground2.immovable = true;
 		add(ground2);
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_1__png);
+		var bgNum:Int = curBG;
+		
+		var bg:FlxSprite = new FlxSprite().loadGraphic("assets/images/bg" + bgNum + "/bg" + bgNum + "-1.png");
 		bg.setGraphicSize(0, FlxG.height);
 		bg.updateHitbox();
 		bg.scrollFactor.set();
 		add(bg);
 
-		var clouds:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_2__png);
+		var clouds:FlxSprite = new FlxSprite().loadGraphic("assets/images/bg" + bgNum + "/bg" + bgNum + "-2.png");
 		clouds.setGraphicSize(0, FlxG.height);
 		clouds.updateHitbox();
 		clouds.scrollFactor.set(0.25, 0.25);
 		add(clouds);
 
-		var mountain:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_3__png);
+		var mountain:FlxSprite = new FlxSprite().loadGraphic("assets/images/bg" + bgNum + "/bg" + bgNum + "-3.png");
 		mountain.setGraphicSize(0, FlxG.height);
 		mountain.updateHitbox();
 		mountain.scrollFactor.set(0.4, 0.4);
 		add(mountain);
 
-		var mountain2:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_4__png);
+		var mountain2:FlxSprite = new FlxSprite().loadGraphic("assets/images/bg" + bgNum + "/bg" + bgNum + "-4.png");
 		mountain2.setGraphicSize(0, FlxG.height);
 		mountain2.updateHitbox();
 		mountain2.scrollFactor.set(0.55, 0.55);
 		add(mountain2);
 
-		var mountain3:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_5__png);
+		var mountain3:FlxSprite = new FlxSprite().loadGraphic("assets/images/bg" + bgNum + "/bg" + bgNum + "-5.png");
 		mountain3.setGraphicSize(0, FlxG.height);
 		mountain3.updateHitbox();
 		mountain3.scrollFactor.set(0.7, 0.7);
 		add(mountain3);
 
 
-		var bg4:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.bg1_6__png);
+		var bg4:FlxSprite = new FlxSprite().loadGraphic("assets/images/bg" + bgNum + "/bg" + bgNum + "-6.png");
 		add(bg4);
 
-		fg = new FlxSprite(0, 10).loadGraphic(AssetPaths.bg1_7__png);
+		fg = new FlxSprite(0, 0).loadGraphic("assets/images/bg" + bgNum + "/bg" + bgNum + "-7.png");
 		fg.alpha = 1;
 		fg.scrollFactor.set(2.2, 2.2);
+
+		if (curBG == 3)
+		{
+			fg.loadGraphic("assets/images/bg" + bgNum + "/bg" + bgNum + "-9.png");
+			fg.scrollFactor.set(1, 1);
+		}
+			
+		
 		//gets added after the player
 		
 
@@ -119,12 +133,45 @@ class PlayState extends FlxState
 	}
 
 
-
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
+		
+		if (FlxG.keys.justPressed.ONE)
+		{
+			curBG = 1;
+			FlxG.resetState();
+		}
+		if (FlxG.keys.justPressed.TWO)
+		{
+			curBG = 2;
+			FlxG.resetState();
+		}
+		if (FlxG.keys.justPressed.THREE)
+		{
+			curBG = 3;
+			FlxG.resetState();
+		}
+			
 
-		if (_player.x > 460 && _player.x < 900)
+
+		var xMin:Float = 0;
+		var xMax:Float = 0;
+
+		switch(curBG)
+		{
+			case 1:
+				xMin = 460;
+				xMax = 900;
+			case 2:
+				xMin = 0;
+				xMax = 50;
+			default:
+				xMin = 0;
+				xMax = 1;
+		}
+
+		if ((_player.x > xMin && _player.x < xMax) || curBG == 3 && _player.y > FlxG.height - 100)
 		{
 			if (fg.alpha > 0.3)
 			{
