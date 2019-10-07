@@ -106,6 +106,8 @@ class Player extends Character
 
         FlxG.watch.addQuick("curANime", animation.curAnim.name);
         FlxG.watch.addQuick("offset", offset);
+        if (offset != ogOffset && animation.curAnim.name == "idle")
+            offset.x = ogOffset.x;
     }
 
     override public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void
@@ -351,7 +353,7 @@ class Player extends Character
 
     override private function animationFixins():Void
     {
-        super.animationFixins();
+        
         if (facing == FlxObject.LEFT)
         {
             switch animation.curAnim.name
@@ -368,5 +370,7 @@ class Player extends Character
         }
         else
             offset.x = ogOffset.x;
+        
+        super.animationFixins();
     }
 }
