@@ -31,8 +31,6 @@ class Enemy extends Character
         _idleTmr = 0;
         playerPos = FlxPoint.get();
 
-        attackCooldown = 5;
-
         _player = p;
     }
 
@@ -97,12 +95,15 @@ class Enemy extends Character
                 if (attackOverlapping)
                     _player.getHurt(0.25, this);
                 attackTmr = 0;
-                isAttacking = false;
             }
         }
             
         if (!isAttacking || _player.isDead)
+        {
+            trace("ATTACK, TO IDLE");
             _brain.activeState = idle;
+        }
+            
     }
 
     override public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void

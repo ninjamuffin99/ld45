@@ -71,7 +71,11 @@ class Character extends Punchable
                     
             }
             else
+            {
+                isAttacking = false;
                 canAttack = true;
+            }
+                
         }
         else
         {
