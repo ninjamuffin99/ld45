@@ -172,8 +172,15 @@ class IntroCutsceneState extends FlxState
 
     override public function update(e:Float):Void
     {
-        if (FlxG.keys.justPressed.R)
-            FlxG.resetState();
+        if (FlxG.keys.justPressed.ENTER)
+        {
+            FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function()
+            {
+                FlxG.switchState(new MenuState());
+            });
+            
+        }
+            
         
         if (canContinue && FlxG.keys.justPressed.ANY)
         {
