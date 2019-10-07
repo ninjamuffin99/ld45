@@ -108,6 +108,8 @@ class Enemy extends Character
     override public function getHurt(dmg:Float, ?fromPos:FlxSprite):Void
     {
         super.getHurt(dmg, fromPos);
+
+        velocity.set(velocity.x * 0.2, velocity.y * 0.2);
         attackCooldown = 3;
         justAttacked = false;
         attackTmr = 0;
