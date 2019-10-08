@@ -1,6 +1,9 @@
 # BOHO IN BALLER LAND
 
 MADE IN 72 HOURS FOR LUDUM DARE 45
+'
+CHANGELOG: https://github.com/ninjamuffin99/ld45/blob/master/CHANGELOG.md
+
 
 PLAY ON NEWGROUNDS https://www.newgrounds.com/portal/view/739593
 
