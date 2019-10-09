@@ -1,5 +1,8 @@
 # CHANGELOG
 ## [Unreleased]
+
+
+## [1.0.1] - 2019-10-08
 ### Added
 - Newgrounds scoreboard support using [Newgrounds.io](https://www.newgrounds.io)
 ### Changed
