@@ -1,4 +1,6 @@
 # CHANGELOG
+## [UNRELEASED]
+
 ## [1.0.2] - 2019-10-08
 ### Added
 - Controller support for the rest of the game
