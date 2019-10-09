@@ -1,5 +1,9 @@
 # CHANGELOG
-## [Unreleased]
+## [1.0.2] - 2019-10-08
+### Added
+- Controller support for the rest of the game
+### Fixed
+- That one shit where you couldn't press left on the level select lmaooo
 
 
 ## [1.0.1] - 2019-10-08

@@ -176,89 +176,105 @@ class IntroCutsceneState extends FlxState
 
     override public function update(e:Float):Void
     {
-        if (FlxG.keys.justPressed.ENTER)
+        var justSkip:Bool = false;
+        var advScene:Bool = false;
+        var gamepad = FlxG.gamepads.lastActive;
+        if (gamepad != null)
         {
-            FlxG.sound.music.fadeOut(0.4, 0);
-
-            FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function()
-            {
-                FlxG.switchState(new MenuState());
-            });
-            
+            advScene = gamepad.justPressed.ANY;
+            justSkip = gamepad.justPressed.START;
         }
-            
+
+
+        if (FlxG.keys.justPressed.ENTER || justSkip)
+            skip();
         
-        if (canContinue && FlxG.keys.justPressed.ANY)
+        if (canContinue)
         {
-            switch curScene
-            {
-                case 0:
-                    canContinue = false;
-                    FlxTween.tween(bar1Text, {alpha:0}, 1.4);
-                    FlxG.camera.fade(FlxColor.BLACK, 4, false, function()
-                    {
-                        add(slide2);
-                        FlxG.camera.stopFX();
-                        FlxG.camera.shake(0.01, 0.8);
-                        canContinue = true;
-                        curScene = 1;
-                    });
-                case 1:
-                    canContinue = false;
-                    FlxG.camera.fade(FlxColor.BLACK, 0.4, false, function()
-                    {
-                        add(grp3);
-                        FlxG.camera.fade(FlxColor.BLACK, 0.4, true, function(){
-                            canContinue = true;
-                            curScene = 2;
-                            FlxTween.tween(barText3, {alpha: 1}, 0.7, {onComplete: function(t:FlxTween)
-                            {
-                                textBubble3.visible = true;
-                            }});
-                        });
-                    });
-
-                case 2:
-                    canContinue = false;
-                    FlxG.camera.fade(FlxColor.BLACK, 0.4, false, function()
-                    {
-                        remove(grp3);
-                        add(grp4);
-                        FlxG.camera.fade(FlxColor.BLACK, 0.4, true, function(){
-                            canContinue = true;
-                            curScene = 3;
-                            FlxTween.tween(barText4, {alpha: 1}, 0.7);
-                        });
-                    });
-
-                case 3:
-                    canContinue = false;
-                    FlxTween.tween(barText4, {alpha:0}, 1.4);
-                    FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
-                    {
-                        add(slide5);
-                        FlxG.camera.stopFX();
-                        FlxG.camera.shake(0.005, 0.4);
-                        canContinue = true;
-                        curScene = 4;
-                    });
-
-                case 4:
-                    canContinue = true;
-                    add(slide6);
-                    FlxG.camera.stopFX();
-                    FlxG.camera.shake(0.01, 0.8);
-                    FlxG.sound.music.fadeOut(2, 0.1);
-                    curScene = 5;
-                case 5:
-                    canContinue = false;
-
-                    FlxG.switchState(new MenuState());
-
-            }
+            if (FlxG.keys.justPressed.ANY || advScene)
+                sceneManager();
             
         }
 
         super.update(e);
+    }
+
+    private function skip():Void
+    {
+        FlxG.sound.music.fadeOut(0.4, 0);
+        FlxG.camera.fade(FlxColor.BLACK, 0.5, false, function()
+        {
+            FlxG.switchState(new MenuState());
+        });
+    }
+
+    private function sceneManager():Void
+    {
+        switch curScene
+        {
+            case 0:
+                canContinue = false;
+                FlxTween.tween(bar1Text, {alpha:0}, 1.4);
+                FlxG.camera.fade(FlxColor.BLACK, 4, false, function()
+                {
+                    add(slide2);
+                    FlxG.camera.stopFX();
+                    FlxG.camera.shake(0.01, 0.8);
+                    canContinue = true;
+                    curScene = 1;
+                });
+            case 1:
+                canContinue = false;
+                FlxG.camera.fade(FlxColor.BLACK, 0.4, false, function()
+                {
+                    add(grp3);
+                    FlxG.camera.fade(FlxColor.BLACK, 0.4, true, function(){
+                        canContinue = true;
+                        curScene = 2;
+                        FlxTween.tween(barText3, {alpha: 1}, 0.7, {onComplete: function(t:FlxTween)
+                        {
+                            textBubble3.visible = true;
+                        }});
+                    });
+                });
+
+            case 2:
+                canContinue = false;
+                FlxG.camera.fade(FlxColor.BLACK, 0.4, false, function()
+                {
+                    remove(grp3);
+                    add(grp4);
+                    FlxG.camera.fade(FlxColor.BLACK, 0.4, true, function(){
+                        canContinue = true;
+                        curScene = 3;
+                        FlxTween.tween(barText4, {alpha: 1}, 0.7);
+                    });
+                });
+
+            case 3:
+                canContinue = false;
+                FlxTween.tween(barText4, {alpha:0}, 1.4);
+                FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+                {
+                    add(slide5);
+                    FlxG.camera.stopFX();
+                    FlxG.camera.shake(0.005, 0.4);
+                    canContinue = true;
+                    curScene = 4;
+                });
+
+            case 4:
+                canContinue = true;
+                add(slide6);
+                FlxG.camera.stopFX();
+                FlxG.camera.shake(0.01, 0.8);
+                FlxG.sound.music.fadeOut(2, 0.1);
+                curScene = 5;
+            case 5:
+                canContinue = false;
+
+                FlxG.switchState(new MenuState());
+        }
+
     }
 }

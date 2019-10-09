@@ -37,7 +37,12 @@ class MenuState extends FlxState
 
     override public function update(e:Float):Void
     {
-        if (FlxG.keys.justPressed.ANY)
+        var pressedAny:Bool = false;
+        var gamepad = FlxG.gamepads.lastActive;
+        if (gamepad != null)
+            pressedAny = gamepad.justPressed.ANY;
+
+        if (FlxG.keys.justPressed.ANY || pressedAny)
             openSubState(new StageSelect());
 
         super.update(e);

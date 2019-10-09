@@ -39,10 +39,22 @@ class StageSelect extends FlxSubState
     override public function update(e:Float):Void
     {
         super.update(e);
+        var _leftP:Bool = false;
+        var _rightP:Bool = false;
+        var _startP:Bool = false;
 
-        if (FlxG.keys.anyJustPressed(["A, LEFT"]))
+        var gamepad = FlxG.gamepads.lastActive;
+        if (gamepad != null)
+        {
+            _leftP = gamepad.anyJustPressed(["DPAD_LEFT", "LEFT_STICK_DIGITAL_LEFT"]);
+            _rightP = gamepad.anyJustPressed(["DPAD_RIGHT", "LEFT_STICK_DIGITAL_RIGHT"]);
+            _startP = gamepad.anyJustPressed(["A", "X", "START"]);
+        }
+
+
+        if (FlxG.keys.anyJustPressed(["A", "LEFT"]) || _leftP)
             curSelected -= 1;
-        if (FlxG.keys.anyJustPressed(["D", "RIGHT"]))
+        if (FlxG.keys.anyJustPressed(["D", "RIGHT"]) || _rightP)
             curSelected += 1;
 
         if (curSelected < 1)
@@ -61,7 +73,7 @@ class StageSelect extends FlxSubState
 
         }
         
-        if (FlxG.keys.justPressed.SPACE && !switchin)
+        if ((FlxG.keys.justPressed.SPACE || _startP) && !switchin)
         {
             switchin = true;
             dumbBoHo.animation.play("punch");

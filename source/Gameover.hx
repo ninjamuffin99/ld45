@@ -40,13 +40,28 @@ class Gameover extends FlxState
     {
         if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE)
         {
-            FlxG.sound.music.fadeOut(2.8, 0);
-            FlxG.camera.fade(FlxColor.BLACK, 3, false, function()
+            leaveState();
+        }
+
+        var gamepad = FlxG.gamepads.lastActive;
+        if (gamepad != null)
+        {
+            if (gamepad.justPressed.A || gamepad.justPressed.START)
             {
-                FlxG.switchState(new MenuState());
-            });
+                leaveState();
+            }
         }
             
         super.update(e);
+    }
+
+    private function leaveState():Void
+    {
+        FlxG.sound.music.fadeOut(2.8, 0);
+        FlxG.camera.fade(FlxColor.BLACK, 3, false, function()
+        {
+            FlxG.switchState(new MenuState());
+        });
+
     }
 }
