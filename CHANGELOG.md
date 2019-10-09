@@ -8,6 +8,7 @@
 ### Changed
 - Can now press SPACEBAR on the gameover screen, since some people thought that was the real end of the game.
 - Made the mouse cursor invisible. It's not needed lolol
+- Removed some unused art assets from the assets folder, making the game a little over 50% smaller in size, decreasing the preloader size.
 
 ## [1.0.0] - 2019-10-07
 ### Added
