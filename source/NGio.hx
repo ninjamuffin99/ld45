@@ -121,7 +121,7 @@ class NGio
 		
 		ngScoresLoaded.dispatch();
 		
-		for (score in NG.core.scoreBoards.get(8004).scores)
+		for (score in NG.core.scoreBoards.get(8737).scores)
 		{
 			trace('score loaded user:${score.user.name}, score:${score.formatted_value}');
 			

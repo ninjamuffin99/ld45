@@ -48,6 +48,7 @@ class IntroCutsceneState extends FlxState
     {
         FlxG.sound.playMusic(AssetPaths.introSong__mp3, 0);
         FlxG.sound.music.fadeIn(4, 0, 0.2);
+        FlxG.mouse.visible = false;
 
         spaceBG = new FlxSprite().loadGraphic(AssetPaths.space__png);
         spaceBG.setGraphicSize(0, Std.int(FlxG.height));

@@ -1,5 +1,11 @@
 # CHANGELOG
 ## [Unreleased]
+### Added
+- Newgrounds scoreboard support using [Newgrounds.io](https://www.newgrounds.io)
+### Changed
+- Can now press SPACEBAR on the gameover screen, since some people thought that was the real end of the game.
+- Made the mouse cursor invisible. It's not needed lolol
+
 ## [1.0.0] - 2019-10-07
 ### Added
 - RELEASE

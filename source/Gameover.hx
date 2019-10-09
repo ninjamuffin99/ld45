@@ -5,6 +5,7 @@ import flixel.FlxState;
 import flixel.FlxG;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import io.newgrounds.NG;
 
 class Gameover extends FlxState
 {
@@ -21,6 +22,13 @@ class Gameover extends FlxState
         var txt:FlxText = new FlxText(630, 430, 0, "" + Scores.cash, 42);
         add(txt);
 
+        if (NGio.isLoggedIn)
+        {
+            var board = NG.core.scoreBoards.get(8737);// ID found in NG project view
+		    board.postScore(Scores.cash * 100); // converts it into cents, for NG scoreboards
+        }
+        
+
         Scores.cash = 0;
 
         // Score.cash
@@ -30,7 +38,7 @@ class Gameover extends FlxState
 
     override public function update(e:Float):Void
     {
-        if (FlxG.keys.justPressed.ENTER)
+        if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.SPACE)
         {
             FlxG.sound.music.fadeOut(2.8, 0);
             FlxG.camera.fade(FlxColor.BLACK, 3, false, function()
