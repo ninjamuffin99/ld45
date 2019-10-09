@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="ld45" file="ld45" main="Main" version="0.0.1" company="HaxeFlixel" />
+	<app title="Boho In Baller Land" file="Boho" main="Main" version="1.0.3" company="HaxeFlixel" />
 
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
@@ -27,9 +27,17 @@
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
-	<set name="BUILD_DIR" value="export" />
+	<set name="BUILD_DIR" value="export/debug" if="debug" />
+	<set name="BUILD_DIR" value="export/release" unless="debug" />
+
 	<classpath name="source" />
-	<assets path="assets" />
+	
+	<assets path="assets/images"/>
+	<assets path="assets/data"/>
+	<assets path="assets/music" include="*.mp3" if="web" />
+	<assets path="assets/music" include="*.ogg" unless="web" />
+	<assets path="assets/sounds" include="*.mp3" if="web" />
+	<assets path="assets/sounds" include="*.ogg" unless="web" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 

@@ -1,5 +1,7 @@
 # CHANGELOG
 ## [UNRELEASED]
+### Added
+- Windows support, download at the [Itch.io](https://ninja-muffin24.itch.io/ld45) page
 
 ## [1.0.2] - 2019-10-08
 ### Added

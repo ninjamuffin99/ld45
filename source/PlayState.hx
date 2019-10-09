@@ -32,7 +32,7 @@ class PlayState extends FlxState
 	{
 		trace("BOOTED UP");
 		FlxG.camera.fade(FlxColor.BLACK, 1, true);
-		FlxG.sound.playMusic(AssetPaths.toughBunny__mp3, 0);
+		FlxG.sound.playMusic("assets/music/toughBunny" + Scores.curMusicType, 0);
 		FlxG.sound.music.fadeIn(10, 0, 0.7);
 
 		FlxG.watch.addMouse();	
@@ -251,7 +251,7 @@ class PlayState extends FlxState
 					add(daImpact);
 					FlxG.camera.shake(FlxG.random.float(0.008, 0.012), FlxG.random.float(0.07, 0.11));
 				}
-
+				
 				if (FlxG.overlap(_player.grpHurtboxes, c.grpHitboxes) && _player.invincibleFrames <= 0)
 				{
 					c.isAttacking = true;
@@ -281,9 +281,9 @@ class PlayState extends FlxState
 		if (_player.successfulAttack && _player.attackOverlapping)
 		{
 			if (_player.alternatingPunch)
-				FlxG.sound.play(AssetPaths.punchGood2__mp3, 0.5);
+				FlxG.sound.play("assets/sounds.punch" + Scores.curMusicType, 0.5);
 			else
-				FlxG.sound.play(AssetPaths.punchGood__mp3, 0.5);
+				FlxG.sound.play("assets/sounds.punch2" + Scores.curMusicType, 0.5);
 		}
 
 		grpCharacters.sort(Punchable.bySprite, FlxSort.ASCENDING);

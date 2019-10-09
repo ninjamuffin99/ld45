@@ -46,7 +46,13 @@ class IntroCutsceneState extends FlxState
 
     override public function create():Void
     {
-        FlxG.sound.playMusic(AssetPaths.introSong__mp3, 0);
+        #if web
+            Scores.curMusicType = ".mp3";
+        #else
+            Scores.curMusicType = ".ogg";
+        #end
+
+        FlxG.sound.playMusic("assets/music/introSong" + Scores.curMusicType, 0);
         FlxG.sound.music.fadeIn(4, 0, 0.2);
         FlxG.mouse.visible = false;
 
