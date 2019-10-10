@@ -5,17 +5,16 @@ import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.FlxSubState;
 import flixel.util.FlxColor;
+import flixel.FlxState;
 import flixel.graphics.frames.FlxAtlasFrames;
 
-class StageSelect extends FlxSubState
+class StageSelect extends FlxState
 {
     private var curSelected:Int = 1;
     private var dumbBoHo:FlxSprite;
 
-    public function new():Void
+    override public function create():Void
     {
-        super();
-
         var selectLevel:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.levelselect__png);
         selectLevel.setGraphicSize(0, FlxG.height);
         selectLevel.updateHitbox();
@@ -32,6 +31,7 @@ class StageSelect extends FlxSubState
         dumbBoHo.animation.play("walk");
         add(dumbBoHo);
 
+        super.create();
     }
 
     private var switchin:Bool = false;

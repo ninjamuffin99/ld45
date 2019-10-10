@@ -10,5 +10,5 @@ butler push ./export/release/html5/bin ninja-muffin24/ld45:html5
 butler status ninja-muffin24/ld45:html5
 echo MOVING INTO GITHUB FOLDER
 del .\docs\*.*
-xcopy .\export\html5\bin /E .\docs\
+xcopy .\export\release\html5\bin /E .\docs\
 pause

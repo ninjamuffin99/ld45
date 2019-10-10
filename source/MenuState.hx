@@ -43,7 +43,7 @@ class MenuState extends FlxState
             pressedAny = gamepad.justPressed.ANY;
 
         if (FlxG.keys.justPressed.ANY || pressedAny)
-            openSubState(new StageSelect());
+            FlxG.switchState(new StageSelect());
 
         super.update(e);
     }

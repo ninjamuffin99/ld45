@@ -1,7 +1,13 @@
 # CHANGELOG
 ## [UNRELEASED]
+
+## [1.0.3] - 2019-10-10
 ### Added
 - Windows support, download at the [Itch.io](https://ninja-muffin24.itch.io/ld45) page
+- The graphic Carmet did for the pause screen
+
+### Fixed
+- Some issue in the main menu/level select, where shit goes fucky if you press 2 buttons at the same time I think
 
 ## [1.0.2] - 2019-10-08
 ### Added
