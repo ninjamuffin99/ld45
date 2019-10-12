@@ -281,9 +281,9 @@ class PlayState extends FlxState
 		if (_player.successfulAttack && _player.attackOverlapping)
 		{
 			if (_player.alternatingPunch)
-				FlxG.sound.play("assets/sounds.punch" + Scores.curMusicType, 0.5);
+				FlxG.sound.play("assets/sounds/punch" + Scores.curMusicType, 0.5);
 			else
-				FlxG.sound.play("assets/sounds.punch2" + Scores.curMusicType, 0.5);
+				FlxG.sound.play("assets/sounds/punch2" + Scores.curMusicType, 0.5);
 		}
 
 		grpCharacters.sort(Punchable.bySprite, FlxSort.ASCENDING);

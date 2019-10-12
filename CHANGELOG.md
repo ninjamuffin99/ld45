@@ -1,5 +1,7 @@
 # CHANGELOG
-## [UNRELEASED]
+## [1.0.4] - 2019-10-12
+### Fixed
+- Ending music and punch sound effects fixed
 
 ## [1.0.3] - 2019-10-10
 ### Added

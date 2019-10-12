@@ -12,7 +12,7 @@ class Gameover extends FlxState
     override public function create():Void
     {
         FlxG.camera.fade(FlxColor.BLACK, 4, true);
-        FlxG.sound.playMusic("assets/music/mall." + Scores.curMusicType, 0);
+        FlxG.sound.playMusic("assets/music/mall" + Scores.curMusicType, 0);
         FlxG.sound.music.fadeIn(5, 0, 0.3);
         var bg:FlxSprite = new FlxSprite().loadGraphic(AssetPaths.BohoEnd__png);
         bg.setGraphicSize(0, FlxG.height);
